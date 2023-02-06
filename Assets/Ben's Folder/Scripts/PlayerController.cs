@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Character character;
+    [SerializeField] GameObject characterBody;
+
     [SerializeField] bool usePhysics = false;
     Rigidbody rigidbody;
 
@@ -32,23 +34,29 @@ public class PlayerController : MonoBehaviour
     {
         if (!usePhysics)
         {
+            Vector3 dirVector = Vector3.zero;
+
             if (Input.GetKey(KeyCode.W))
             {
-                gameObject.transform.position += this.transform.forward * character.moveSpeed * Time.deltaTime;
+                dirVector += this.transform.forward;
             }
             else if (Input.GetKey(KeyCode.S))
             {
-                gameObject.transform.position -= this.transform.forward * character.moveSpeed * Time.deltaTime;
+                dirVector -= this.transform.forward;
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                gameObject.transform.position -= this.transform.right * character.moveSpeed * Time.deltaTime;
+                dirVector -= this.transform.right;
             }
             else if (Input.GetKey(KeyCode.D))
             {
-                gameObject.transform.position += this.transform.right * character.moveSpeed * Time.deltaTime;
+                dirVector += this.transform.right;
             }
+
+            dirVector = Vector3.Normalize(dirVector);
+
+            gameObject.transform.position += dirVector * character.moveSpeed * Time.deltaTime;
         }
         else
         {
@@ -82,15 +90,10 @@ public class PlayerController : MonoBehaviour
 
         if(Physics.Raycast(castPoint, out hit, Mathf.Infinity)) 
         {
-            //hit.point
-            float angleOfRotation = Vector3.Angle(Vector3.forward, hit.point - transform.position);
+            Vector3 aimVector = hit.point - transform.position;
+            aimVector.y = 0;
 
-            Vector3 rotation = new Vector3(0, angleOfRotation, 0);
-
-            print(rotation);
-
-            transform.Rotate(rotation);
+            characterBody.transform.forward = Vector3.Normalize(aimVector);
         }
-
     }
 }
