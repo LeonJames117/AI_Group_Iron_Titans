@@ -12,6 +12,8 @@ public class Nav_Grid : MonoBehaviour
     [SerializeField] float nodeRadius;
 
     [SerializeField] float updateFrequency;
+
+    [Range(0.0f, 1.0f)]
     [SerializeField] float visualisationAlpha;
 
     float nodeDiameter;

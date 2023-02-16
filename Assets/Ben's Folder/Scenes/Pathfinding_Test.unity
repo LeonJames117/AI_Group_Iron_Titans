@@ -158,7 +158,7 @@ MonoBehaviour:
   gridSize: {x: 30, y: 30}
   nodeRadius: 1
   updateFrequency: 0.1
-  visualisationAlpha: 0.2
+  visualisationAlpha: 0.306
 --- !u!4 &307703325
 Transform:
   m_ObjectHideFlags: 0
@@ -172,7 +172,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &665290924
 GameObject:
@@ -264,12 +264,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665290924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.74, y: 0.77, z: -6.76}
+  m_LocalPosition: {x: -6.78, y: 0.77, z: -7.03}
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &827010102
 GameObject:
@@ -552,7 +552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748451299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.16, y: 0.77, z: 9.05}
+  m_LocalPosition: {x: 7.1, y: 0.77, z: 6.83}
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
