@@ -2,27 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class Flocking_Agent : MonoBehaviour
 {
-    [SerializeField] public Vector3 Velocity;
-    [SerializeField] public string Flock_Type;
-    public int Neighbor_Num;
-
-    public Vector3 Get_Location()
-    {
-        return transform.position;
-
-    }
-
+    Collider Agent_Collider;
+    public Collider Agent_Collider_Access { get { return Agent_Collider; } }
     // Start is called before the first frame update
     void Start()
     {
-        
+        Agent_Collider = GetComponent<Collider>();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Move_To(Vector3 Destination)
     {
-        
+        //Face new destination
+        transform.forward = Destination;
+        //Movement
+        transform.position += Destination * Time.deltaTime;
     }
+   
+    
+    
+    
+    
+    // Update is called once per frame
+    //void Update()
+    //{
+        
+    //}
 }
