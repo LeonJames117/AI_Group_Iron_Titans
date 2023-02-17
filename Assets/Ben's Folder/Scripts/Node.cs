@@ -7,6 +7,10 @@ public class Node
     public Vector3 position;
     public bool isObstructed = false;
 
+    public int hCost;
+    public int gCost;
+    public int fCost;
+
     public Node(Vector3 p_position, bool p_isObstructed) 
     {
         position = p_position;

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Nav_Grid : MonoBehaviour
 {
     [SerializeField] LayerMask obstacle_LayerMask;
+    [SerializeField] LayerMask walkable_LayerMask;
     [SerializeField] Vector2 gridSize;
 
     [Range(0.1f, 10.0f)]
@@ -16,7 +17,7 @@ public class Nav_Grid : MonoBehaviour
     [Range(0.0f, 1.0f)]
     [SerializeField] float visualisationAlpha;
 
-    float nodeDiameter;
+    public float nodeDiameter;
 
     Node[,] grid;
     int gridSizeX;
@@ -27,6 +28,8 @@ public class Nav_Grid : MonoBehaviour
 
     bool updateNavGrid = true;
     float updateTimer = 0.0f;
+
+    public Vector3 bottomLeft_GridPos;
 
     // Start is called before the first frame update
     void Start()
@@ -39,9 +42,9 @@ public class Nav_Grid : MonoBehaviour
         InitGridParameters();
 
         grid = new Node[gridSizeX, gridSizeY];
-        Vector3 bottomLeft_GridPos = transform.position - 
-                                    (transform.right * gridSize.x / 2) - 
-                                    (transform.forward * gridSize.y / 2); 
+        bottomLeft_GridPos = transform.position - 
+                             (transform.right * gridSize.x / 2) - 
+                             (transform.forward * gridSize.y / 2); 
 
         for (int y = 0; y < gridSizeY; y++)
         {
@@ -51,7 +54,8 @@ public class Nav_Grid : MonoBehaviour
                                         (Vector3.right * ((x * nodeDiameter) + nodeRadius)) +
                                         (Vector3.forward * ((y * nodeDiameter) + nodeRadius));
 
-                bool isObstructed = Physics.CheckBox(node_position, nodeHalfExtents, this.transform.rotation, obstacle_LayerMask);
+                bool isObstructed = Physics.CheckBox(node_position, nodeHalfExtents, this.transform.rotation, obstacle_LayerMask) || 
+                                    !Physics.CheckBox(node_position, nodeHalfExtents, this.transform.rotation, walkable_LayerMask);
 
                 grid[x, y] = new Node(node_position, isObstructed);
             }
