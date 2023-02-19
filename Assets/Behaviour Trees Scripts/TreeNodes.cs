@@ -28,4 +28,10 @@ public class TreeNodes
         Children.Add(n);
     }
 
+    //Keep track of the tree nodes progress to see if node has successed, failed or still running.
+    public virtual Status Process()
+    {
+        return Children[CurrentChild].Process();
+    }
+
 }

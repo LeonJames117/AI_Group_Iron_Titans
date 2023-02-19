@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Struct to make the tree printed out easier to read.
 struct NodeTier
 {
     public int Tier;
@@ -22,6 +23,13 @@ public class TreeRoot : TreeNodes
     {
         Name = n;
     }
+
+    //Keep track of the tree nodes progress to see if node has successed, failed or still running.
+    public override Status Process()
+    {
+        return Children[CurrentChild].Process();
+    }
+
 
     //Print tree for debugging.
     public void PrintTree()
