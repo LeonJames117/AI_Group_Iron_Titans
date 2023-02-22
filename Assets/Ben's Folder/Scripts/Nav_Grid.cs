@@ -31,6 +31,7 @@ public class Nav_Grid : MonoBehaviour
 
     public Vector3 bottomLeft_GridPos;
 
+    public List<Node> path;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +59,9 @@ public class Nav_Grid : MonoBehaviour
                                     !Physics.CheckBox(node_position, nodeHalfExtents, this.transform.rotation, walkable_LayerMask);
 
                 grid[x, y] = new Node(node_position, isObstructed);
+
+                grid[x, y].xGridCoord = x;
+                grid[x, y].yGridCoord = y;
             }
         }
     }
@@ -93,13 +97,58 @@ public class Nav_Grid : MonoBehaviour
                     Gizmos.color = new Color(0, 1, 0, visualisationAlpha);
                 }
 
-                Gizmos.DrawWireCube(node.position, new Vector3(nodeDiameter, 0.9f, nodeDiameter));
+                if(path != null) 
+                {
+                    if (path.Contains(node)) 
+                    {
+                        Gizmos.color = new Color(1, 0, 1, visualisationAlpha);
+                    }                    
+                }
 
+                Gizmos.DrawWireCube(node.position, new Vector3(nodeDiameter, 0.9f, nodeDiameter));
                 Gizmos.DrawCube(node.position, GizmoNodeSize);
             }
         }
     }
 
+    public Node GetNodeFromPosition(Vector3 position) 
+    {
+        float x = (int)(position.x - bottomLeft_GridPos.x);
+        float y = (int)(position.z - bottomLeft_GridPos.z);
+
+        x = (int)(x / nodeDiameter);
+        y = (int)(y / nodeDiameter);
+
+        return grid[(int)x, (int)y];
+    }
+
+    public List<Node> GetNeighbours(Node node) 
+    {
+        List<Node> neighbours = new List<Node>();
+
+        for (int x = -1; x < 2; x++)
+        {
+            for (int y = -1; y < 2; y++)
+            {
+                int xCoord = node.xGridCoord + x;
+                int yCoord = node.yGridCoord + y;
+
+                if ((x == 0 && y == 0)) 
+                {
+                    continue;
+                }
+                
+                if((!grid[xCoord, yCoord].isObstructed) &&
+                   (xCoord >= 0 && xCoord <= gridSizeX) &&
+                   (yCoord >= 0 && xCoord <= gridSizeY)) 
+                {
+                    neighbours.Add(grid[xCoord, yCoord]);
+                }
+            }
+        }
+
+        return neighbours;
+    }
     // Update is called once per frame
     void Update()
     {
