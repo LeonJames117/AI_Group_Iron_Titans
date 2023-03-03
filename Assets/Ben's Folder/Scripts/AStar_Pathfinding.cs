@@ -6,9 +6,9 @@ public class AStar_Pathfinding : MonoBehaviour
 {
     [SerializeField] Nav_Grid grid;
 
-
     Vector2 startNodeIndicies;
     Vector2 endNodeIndicies;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,25 +27,14 @@ public class AStar_Pathfinding : MonoBehaviour
         Node startNode = grid.GetNodeFromPosition(startPos);
         Node endNode = grid.GetNodeFromPosition(destinationPos);
 
-        List<Node> openList = new List<Node>();
+        BinaryHeap<Node> openHeap = new BinaryHeap<Node>(grid.gridSizeX * grid.gridSizeY);
         HashSet<Node> closedList = new HashSet<Node>();
 
-        openList.Add(startNode);
+        openHeap.Add(startNode);
 
-        while (openList.Count > 0) 
+        while (openHeap.nodeCount > 0) 
         {
-            Node curNode = openList[0];
-
-            for (int i = 0; i < openList.Count; i++)
-            {
-                if((openList[i].fCost < curNode.fCost) ||
-                    (openList[i].fCost == curNode.fCost && openList[i].hCost < curNode.hCost)) 
-                {
-                    curNode = openList[i];
-                }
-            }
-
-            openList.Remove(curNode);
+            Node curNode = openHeap.Remove();
             closedList.Add(curNode);
 
             if(curNode == endNode) 
@@ -63,7 +52,7 @@ public class AStar_Pathfinding : MonoBehaviour
 
                 int new_gCost = curNode.gCost + CalculateDistanceBetweenNodes(curNode, neighbour);
 
-                bool inOpenList = openList.Contains(neighbour);
+                bool inOpenList = openHeap.Contains(neighbour);
 
                 if (new_gCost > neighbour.gCost || !inOpenList) 
                 {
@@ -73,7 +62,7 @@ public class AStar_Pathfinding : MonoBehaviour
 
                     if (!inOpenList) 
                     {
-                        openList.Add(neighbour);
+                        openHeap.Add(neighbour);
                     }
                 }
             }

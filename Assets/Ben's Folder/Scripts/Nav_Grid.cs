@@ -20,8 +20,8 @@ public class Nav_Grid : MonoBehaviour
     public float nodeDiameter;
 
     Node[,] grid;
-    int gridSizeX;
-    int gridSizeY;
+    public int gridSizeX;
+    public int gridSizeY;
 
     Vector3 nodeHalfExtents;
     Vector3 GizmoNodeSize;
