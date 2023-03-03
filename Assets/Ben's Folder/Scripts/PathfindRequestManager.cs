@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PathfindRequestManager : MonoBehaviour
 {
+    [SerializeField] AStar_Pathfinding pathfinder;
     public static PathfindRequestManager instance { get; private set; }
 
     private void Awake()
@@ -18,11 +19,9 @@ public class PathfindRequestManager : MonoBehaviour
         }
     }
 
-    public Vector3[] RequestPath() 
+    public List<Vector3> RequestPath(Vector3 startPos, Vector3 endPos) 
     {
-        Vector3[] result = new Vector3[4];
-        return result;
+        List<Vector3> result = pathfinder.Pathfind(startPos, endPos);
+        return result;   
     }
-
-
 }

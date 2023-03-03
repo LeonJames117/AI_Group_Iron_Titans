@@ -9,7 +9,7 @@ public class AStar_Pathfinding : MonoBehaviour
     Vector2 startNodeIndicies;
     Vector2 endNodeIndicies;
 
-    public void Pathfind(Vector3 startPos, Vector3 destinationPos) 
+    public List<Vector3> Pathfind(Vector3 startPos, Vector3 destinationPos) 
     {
         Node startNode = grid.GetNodeFromPosition(startPos);
         Node endNode = grid.GetNodeFromPosition(destinationPos);
@@ -26,8 +26,7 @@ public class AStar_Pathfinding : MonoBehaviour
 
             if(curNode == endNode) 
             {
-                TracePath(startNode, endNode);
-                return;
+                return TracePath(startNode, endNode);
             }
 
             foreach(Node neighbour in grid.GetNeighbours(curNode)) 
@@ -54,9 +53,11 @@ public class AStar_Pathfinding : MonoBehaviour
                 }
             }
         }
+
+        return null;
     }
 
-    void SimplifyPath(List<Node> path) 
+    List<Vector3> SimplifyPath(List<Node> path) 
     {
         List<Vector3> simplified_path = new List<Vector3>(); 
 
@@ -72,9 +73,11 @@ public class AStar_Pathfinding : MonoBehaviour
 
             directionA = directionB;
         }
+
+        return simplified_path;
     }
 
-    void TracePath(Node start, Node end) 
+    List<Vector3> TracePath(Node start, Node end) 
     {
         List<Node> path = new List<Node>();
         Node current = end;
@@ -87,10 +90,9 @@ public class AStar_Pathfinding : MonoBehaviour
         path.Reverse();
 
         print("trace");
-
-        //Simplify Path
-
         grid.path = path;
+
+        return SimplifyPath(path);
     }
 
     int CalculateDistanceBetweenNodes(Node start, Node end) 
