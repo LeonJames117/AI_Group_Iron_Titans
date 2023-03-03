@@ -9,19 +9,6 @@ public class AStar_Pathfinding : MonoBehaviour
     Vector2 startNodeIndicies;
     Vector2 endNodeIndicies;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Pathfind(Vector3 startPos, Vector3 destinationPos) 
     {
         Node startNode = grid.GetNodeFromPosition(startPos);
@@ -69,6 +56,24 @@ public class AStar_Pathfinding : MonoBehaviour
         }
     }
 
+    void SimplifyPath(List<Node> path) 
+    {
+        List<Vector3> simplified_path = new List<Vector3>(); 
+
+        Vector3 directionA = Vector3.zero;
+
+        for (int i = 0; i < path.Count; i++)
+        {
+            Vector3 directionB = Vector3.Normalize(path[i + 1].position - path[i].position);
+            if(directionA != directionB) 
+            {
+                simplified_path.Add(path[i].position);
+            }
+
+            directionA = directionB;
+        }
+    }
+
     void TracePath(Node start, Node end) 
     {
         List<Node> path = new List<Node>();
@@ -82,6 +87,8 @@ public class AStar_Pathfinding : MonoBehaviour
         path.Reverse();
 
         print("trace");
+
+        //Simplify Path
 
         grid.path = path;
     }
