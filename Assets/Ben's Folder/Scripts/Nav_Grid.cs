@@ -119,8 +119,6 @@ public class Nav_Grid : MonoBehaviour
         x = (int)(x / nodeDiameter);
         y = (int)(y / nodeDiameter);
 
-
-
         return grid[(int)x, (int)y];
     }
 

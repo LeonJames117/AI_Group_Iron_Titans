@@ -8,7 +8,7 @@ public class Nav_Agent : MonoBehaviour
     int waypoint_index = 0;
     bool followingPath = false;
     float tolerance = 0.1f;
-    float speed = 1.0f;
+    [SerializeField] float speed = 100.0f;
     Vector3 direction;
 
     public void StartFollowPath(List<Vector3> path) 
@@ -16,6 +16,15 @@ public class Nav_Agent : MonoBehaviour
         followingPath = true;
         waypoint_index = 0;
         waypoints = path;
+
+        int i = 0;
+
+        foreach (Vector3 item in waypoints)
+        {
+            print("waypoint " + i + ": " + item);
+            i++;
+        }
+
     }
 
     private void Update()
@@ -30,19 +39,22 @@ public class Nav_Agent : MonoBehaviour
     {
         ProcessArrivedAtWaypoint();
         transform.position += direction * speed * Time.deltaTime;
+
+
     }
 
     void ProcessArrivedAtWaypoint() 
     {
-        Vector3 dir = waypoints[waypoint_index]  - transform.position;
+        Vector3 dir = waypoints[waypoint_index] - transform.position;
         dir.y = 0;
         float distance = dir.magnitude;
         dir = Vector3.Normalize(dir);
+        direction = dir;
 
         if (distance < 0.01f) 
         {
             waypoint_index++;
-            if (waypoint_index < waypoints.Count) 
+            if (waypoint_index > waypoints.Count - 1) 
             {
                 //Path Complete
                 CompletePath();

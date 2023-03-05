@@ -61,16 +61,23 @@ public class AStar_Pathfinding : MonoBehaviour
     {
         List<Vector3> simplified_path = new List<Vector3>(); 
 
-        Vector3 directionA = Vector3.zero;
+        //Add first waypoint
+        simplified_path.Add(path[0].position);
 
-        for (int i = 0; i < path.Count; i++)
+        Vector3 directionA = Vector3.zero;
+        for (int i = 0; i < path.Count - 1; i++)
         {
             Vector3 directionB = Vector3.Normalize(path[i + 1].position - path[i].position);
-            if(directionA != directionB) 
+            if (directionA != directionB)
             {
-                simplified_path.Add(path[i].position);
+                //different
+            }
+            else 
+            {
+                simplified_path.RemoveAt(simplified_path.Count - 1);
             }
 
+            simplified_path.Add(path[i + 1].position);
             directionA = directionB;
         }
 
@@ -88,8 +95,6 @@ public class AStar_Pathfinding : MonoBehaviour
             current = current.parent;
         }
         path.Reverse();
-
-        print("trace");
         grid.path = path;
 
         return SimplifyPath(path);
