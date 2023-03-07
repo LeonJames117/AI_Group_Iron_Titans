@@ -17,10 +17,13 @@ public class Node : IBinaryHeapNode<Node>
 
     int heapIndex;
 
-    public Node(Vector3 p_position, bool p_isObstructed) 
+    public int weight = 0;
+
+    public Node(Vector3 p_position, bool p_isObstructed, int p_weight) 
     {
         position = p_position;
         isObstructed = p_isObstructed;
+        weight = p_weight;
     }
 
     public int fCost 

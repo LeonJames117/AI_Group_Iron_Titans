@@ -36,7 +36,9 @@ public class AStar_Pathfinding : MonoBehaviour
                     continue;
                 }
 
-                int new_gCost = curNode.gCost + CalculateDistanceBetweenNodes(curNode, neighbour);
+                int distBetweenNodes = CalculateDistanceBetweenNodes(curNode, neighbour);
+
+                int new_gCost = curNode.gCost + distBetweenNodes + (distBetweenNodes / 10  * neighbour.weight);
 
                 bool inOpenList = openHeap.Contains(neighbour);
 
@@ -49,6 +51,10 @@ public class AStar_Pathfinding : MonoBehaviour
                     if (!inOpenList) 
                     {
                         openHeap.Add(neighbour);
+                    }
+                    else 
+                    {
+                        openHeap.SortUp(neighbour);
                     }
                 }
             }

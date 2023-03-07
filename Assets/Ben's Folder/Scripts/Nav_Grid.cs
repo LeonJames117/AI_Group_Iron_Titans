@@ -6,7 +6,7 @@ using UnityEngine;
 public class Nav_Grid : MonoBehaviour
 {
     [SerializeField] LayerMask obstacle_LayerMask;
-    [SerializeField] LayerMask walkable_LayerMask;
+    LayerMask walkable_LayerMask;
     [SerializeField] Vector2 gridSize;
 
     [Range(0.1f, 10.0f)]
@@ -30,6 +30,7 @@ public class Nav_Grid : MonoBehaviour
     float updateTimer = 0.0f;
 
     public Vector3 bottomLeft_GridPos;
+    public TerrainType[] terrainTypes;
 
     public List<Node> path;
     // Start is called before the first frame update
@@ -39,7 +40,9 @@ public class Nav_Grid : MonoBehaviour
     }
 
     void InitGrid()
-    { 
+    {
+
+        InitWalkableLayerMask();
         InitGridParameters();
 
         grid = new Node[gridSizeX, gridSizeY];
@@ -58,12 +61,45 @@ public class Nav_Grid : MonoBehaviour
                 bool isObstructed = Physics.CheckBox(node_position, nodeHalfExtents, this.transform.rotation, obstacle_LayerMask) || 
                                     !Physics.CheckBox(node_position, nodeHalfExtents, this.transform.rotation, walkable_LayerMask);
 
-                grid[x, y] = new Node(node_position, isObstructed);
+
+                int weight = 0;
+                RaycastHit hit;
+                Vector3 raycastStart = new Vector3(node_position.x, node_position.y + 5, node_position.z);
+
+                if (Physics.Raycast(raycastStart, Vector3.down, out hit, Mathf.Infinity, walkable_LayerMask)) 
+                {
+                    weight = GetLayerWeight(hit.collider.gameObject.layer);
+                    //Debug.DrawRay(raycastStart, Vector3.down * 10.0f, Color.blue);
+                }
+
+                grid[x, y] = new Node(node_position, isObstructed, weight);
 
                 grid[x, y].xGridCoord = x;
                 grid[x, y].yGridCoord = y;
             }
         }
+    }
+
+    void InitWalkableLayerMask() 
+    {
+        foreach (TerrainType terrainType in terrainTypes)
+        {
+            walkable_LayerMask |= terrainType.layerMask;
+        }
+    }
+
+    int GetLayerWeight(LayerMask layer) 
+    {
+        foreach (TerrainType terrainType in terrainTypes)
+        {
+         
+            if(layer.value == Mathf.Log(terrainType.layerMask.value, 2)) 
+            {
+                return terrainType.weight;
+            }
+        }
+
+        return 0;
     }
 
     void InitGridParameters() 
@@ -165,4 +201,11 @@ public class Nav_Grid : MonoBehaviour
         ClearGrid();
         InitGrid();
     }
+}
+
+[System.Serializable]
+public class TerrainType
+{
+    [SerializeField] public LayerMask layerMask;
+    [SerializeField] public int weight;
 }

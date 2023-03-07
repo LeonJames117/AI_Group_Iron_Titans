@@ -13,9 +13,9 @@ TagManager:
   - UI
   - Nav_Obstacle
   - Nav_Walkable
-  - 
-  - 
-  - 
+  - Nav_Path
+  - Nav_Grass
+  - Nav_Mud
   - 
   - 
   - 

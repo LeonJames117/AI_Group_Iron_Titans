@@ -21,10 +21,8 @@ public class Nav_Agent : MonoBehaviour
 
         foreach (Vector3 item in waypoints)
         {
-            print("waypoint " + i + ": " + item);
             i++;
         }
-
     }
 
     private void Update()
@@ -39,8 +37,6 @@ public class Nav_Agent : MonoBehaviour
     {
         ProcessArrivedAtWaypoint();
         transform.position += direction * speed * Time.deltaTime;
-
-
     }
 
     void ProcessArrivedAtWaypoint() 
@@ -73,3 +69,5 @@ public class Nav_Agent : MonoBehaviour
     }
 
 }
+
+

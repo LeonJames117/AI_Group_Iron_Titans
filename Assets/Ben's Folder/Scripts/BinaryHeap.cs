@@ -33,7 +33,7 @@ public class BinaryHeap<T> where T : IBinaryHeapNode<T>
         return topNode;
     }
 
-    void SortUp(T node) 
+    public void SortUp(T node) 
     {
         T parent;
 
