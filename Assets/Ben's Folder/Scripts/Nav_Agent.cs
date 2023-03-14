@@ -11,6 +11,12 @@ public class Nav_Agent : MonoBehaviour
     [SerializeField] float speed = 100.0f;
     Vector3 direction;
 
+    [SerializeField] float smoothTurnBoundary = 1.0f;
+    float turnedDistance = 0.0f;
+    bool beyondTurnBoundary = false;
+
+    [SerializeField] GameObject body;
+
     public void StartFollowPath(List<Vector3> path) 
     {
         followingPath = true;
@@ -37,6 +43,13 @@ public class Nav_Agent : MonoBehaviour
     {
         ProcessArrivedAtWaypoint();
         transform.position += direction * speed * Time.deltaTime;
+
+        if (beyondTurnBoundary) 
+        {
+            turnedDistance += speed * Time.deltaTime;
+
+        }
+        body.transform.forward = direction;
     }
 
     void ProcessArrivedAtWaypoint() 
@@ -47,15 +60,38 @@ public class Nav_Agent : MonoBehaviour
         dir = Vector3.Normalize(dir);
         direction = dir;
 
-        if (distance < 0.01f) 
+        if (((distance < smoothTurnBoundary) || beyondTurnBoundary) &&
+           (waypoint_index + 1 < waypoints.Count))
         {
-            waypoint_index++;
-            if (waypoint_index > waypoints.Count - 1) 
+            beyondTurnBoundary = true;
+
+            float delta = (turnedDistance) / (smoothTurnBoundary);
+
+            Vector3 nextWaypointDir = waypoints[waypoint_index + 1] - transform.position;
+            nextWaypointDir.y = 0;
+            nextWaypointDir = Vector3.Normalize(nextWaypointDir);
+
+            //float delta = 1 - ((smoothTurnBoundary - distance) / smoothTurnBoundary);
+
+            Vector3 newDir = Vector3.Lerp(dir, nextWaypointDir, delta);
+            direction = newDir;
+
+            if (delta >= 1)
             {
-                //Path Complete
-                CompletePath();
+                turnedDistance = 0;
+                waypoint_index++;
+                beyondTurnBoundary = false;
             }
         }
+
+        if (waypoint_index == waypoints.Count - 1 && distance < 0.01f) // last waypoint
+        {
+            //Path Complete
+            print("complete");
+            CompletePath();
+        }
+
+
     }
 
     void CompletePath()
