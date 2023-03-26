@@ -29,7 +29,7 @@ public class AStar_Pathfinding : MonoBehaviour
                 return TracePath(startNode, endNode);
             }
 
-            foreach(Node neighbour in grid.GetNeighbours(curNode)) 
+            foreach(Node neighbour in grid.GetNeighbours(curNode, endNode)) 
             {
                 if (closedList.Contains(neighbour)) 
                 {

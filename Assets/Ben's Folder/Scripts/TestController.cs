@@ -8,39 +8,42 @@ public class TestController : MonoBehaviour
 
     bool pathed = false;
 
+    float updateTimer = 0.0f;
+    float updateFrequency = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
         nav_agent = GetComponent<Nav_Agent>();
-
-
-
-
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeSinceLevelLoad > 2 && pathed == false) 
+        updateTimer += Time.deltaTime;
+        if(updateTimer >= updateFrequency) 
         {
-            pathed = true;
+            updateTimer = 0.0f;
+            UpdateController();
+        }
 
-            Vector3 startPos = transform.position;
-            startPos.y = 0;
+    }
 
-            Vector3 endPos = end.transform.position;
-            endPos.y = 0;
+    void UpdateController() 
+    {
+        pathed = true;
+
+        Vector3 startPos = transform.position;
+        startPos.y = 0;
+
+        Vector3 endPos = end.transform.position;
+        endPos.y = 0;
+
+        if((startPos - endPos).magnitude > 2.0) 
+        {
 
             nav_agent.StartFollowPath(PathfindRequestManager.instance.RequestPath(startPos, endPos));
         }
 
-        //Vector3 startPos = transform.position;
-        //startPos.y = 0;
-
-        //Vector3 endPos = end.transform.position;
-        //endPos.y = 0;
-
-        //a.Pathfind(startPos, endPos);
     }
 }

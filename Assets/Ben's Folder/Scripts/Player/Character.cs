@@ -106,7 +106,10 @@ public class Character : MonoBehaviour
 
     void ProcessAim() 
     {
-        characterBody.transform.forward = Vector3.Normalize(aimDirection);
+        if(aimDirection != Vector3.zero) 
+        {
+            characterBody.transform.forward = Vector3.Normalize(aimDirection);
+        }
     }
 
     public void Attack()

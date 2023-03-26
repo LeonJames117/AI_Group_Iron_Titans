@@ -92,7 +92,6 @@ public class Nav_Grid : MonoBehaviour
     {
         foreach (TerrainType terrainType in terrainTypes)
         {
-         
             if(layer.value == Mathf.Log(terrainType.layerMask.value, 2)) 
             {
                 return terrainType.weight;
@@ -158,7 +157,7 @@ public class Nav_Grid : MonoBehaviour
         return grid[(int)x, (int)y];
     }
 
-    public List<Node> GetNeighbours(Node node) 
+    public List<Node> GetNeighbours(Node node, Node endNode) 
     {
         List<Node> neighbours = new List<Node>();
 
@@ -174,7 +173,7 @@ public class Nav_Grid : MonoBehaviour
                     continue;
                 }
                 
-                if((!grid[xCoord, yCoord].isObstructed) &&
+                if(((!grid[xCoord, yCoord].isObstructed) ||(grid[xCoord, yCoord] == endNode)) &&
                    (xCoord >= 0 && xCoord <= gridSizeX) &&
                    (yCoord >= 0 && xCoord <= gridSizeY)) 
                 {
