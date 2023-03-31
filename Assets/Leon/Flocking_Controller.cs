@@ -6,7 +6,7 @@ public class Flocking_Controller : MonoBehaviour
 {
     //List Setup
     public Flocking_Agent Flocking_Prefab;
-    List<Flocking_Agent> All_Agents = new List<Flocking_Agent>();
+    public List<Flocking_Agent> All_Agents = new List<Flocking_Agent>();
     //Behavior
     public Flocking_Behavior Behavior;
     //Spawning
@@ -38,20 +38,64 @@ public class Flocking_Controller : MonoBehaviour
         //Setup Flock
         for(int i = 0; i < Agent_Count; i++)
         {
-            Flocking_Agent New_Agent = Instantiate(Flocking_Prefab,Random.insideUnitCircle * Agent_Count * Density,Quaternion.Euler(Vector3.forward*Random.Range(0f,360f)),transform);
-            New_Agent.name = "Flocking_Agent " + i;
-            All_Agents.Add(New_Agent);
+            Vector3 Random_Pos_in_Cir = Random.insideUnitCircle * Agent_Count * Density;
+
+            
+            if (!Physics.CheckSphere(Random_Pos_in_Cir, 0.5f))
+            {
+                Flocking_Agent New_Agent = Instantiate(Flocking_Prefab,Random_Pos_in_Cir , Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)), transform);
+                print("Agent " + i + " Instaticated");
+                New_Agent.name = "Flocking_Agent " + i;
+                print("Agent " + i + " Added to array");
+                All_Agents.Add(New_Agent);
+            }
+            else
+            {
+                print("Overlap detected on " + "Agent " + i);
+                i--;
+            }
+            
+            
+            
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        
+
+        //foreach (var agent in All_Agents)
+        //{
+        //    //Finds all neighbours in detection raduis
+        //    List<Transform> World = GetNearbyObjects(agent);
+        //    Vector3 Move = Behavior.Caculate_Movement(agent, World, this);
+        //    Move *= Speed_Mulitplier;
+        //    if(Move.sqrMagnitude > Square_Max_Speed)
+        //    {
+        //        //Reset move to 1 and multiply by max speed
+        //        Move= Move.normalized*Max_Speed;
+        //    }
+        //    agent.Move_To(Move);
+        //}
 
             
         
         
     }
+
+
+    List<Transform> GetNearbyObjects(Flocking_Agent A)
+    {
+        List<Transform> Nearby = new List<Transform>();
+        Collider[] NearbyCheck = Physics.OverlapSphere(A.transform.position, Detection_Radius);
+        foreach(Collider Collider in NearbyCheck)
+        {
+            if(Collider != A.Agent_Collider_Access)
+            {
+                Nearby.Add(Collider.transform);
+            }
+        }
+        return Nearby;
+    }
+
 }
