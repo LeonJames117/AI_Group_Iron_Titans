@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
 
 
     [SerializeField] BoxCollider attackBox;
-
+    bool attacking = false;
 
     public enum MoveState
     {
@@ -34,7 +34,8 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        attackBox.enabled = false;
+        attackBox.gameObject.SetActive(false);
+        //attackBox.enabled = false;
     }
 
     private void Update()
@@ -61,16 +62,31 @@ public class Character : MonoBehaviour
 
     public void ProcessAttacking() 
     {
-        if(attackWindowTimer >= attackWindow) 
+        if (attacking) 
         {
-            attackBox.enabled = false;
-            attackWindowTimer = 0.0f;
+            attackTimer += Time.deltaTime;
+
+            if(attackWindow < attackTimer) 
+            {
+                attackBox.gameObject.SetActive(false);
+            }
+
+            if(attackCooldown < attackTimer) 
+            {
+                attacking = false;
+                attackTimer = 0.0f;
+            }
         }
+
+        //if(attackWindowTimer >= attackWindow) 
+        //{
+        //    attackBox.enabled = false;
+        //    attackWindowTimer = 0.0f;
+        //}
     }
 
     public void ProcessTimers() 
     {
-        attackTimer += Time.deltaTime;
         attackWindowTimer += Time.deltaTime;
     }
 
@@ -114,12 +130,21 @@ public class Character : MonoBehaviour
 
     public void Attack()
     {
-        if(attackTimer >= attackCooldown) 
+        if (!attacking) 
         {
-            attackBox.enabled = true;
-            print("attack");
-            attackTimer = 0;
-            attackWindowTimer = 0.0f;
+            attacking = true;
+            attackBox.gameObject.SetActive(true);
         }
+
+
+
+        //if(attackTimer >= attackCooldown) 
+        //{
+        //    attackBox.gameObject.SetActive(true);
+        //    //attackBox.enabled = true;
+        //    print("attack");
+        //    attackTimer = 0;
+        //    attackWindowTimer = 0.0f;
+        //}
     }
 }

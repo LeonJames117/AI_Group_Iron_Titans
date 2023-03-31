@@ -213,6 +213,15 @@ public class Nav_Agent : MonoBehaviour
         followingPath = false;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "AttackBox") 
+        {
+            print("ouch");
+            Destroy(gameObject);
+        }
+    }
+
 }
 
 
