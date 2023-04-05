@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    protected int Health = 100;
+    public int Health = 100;
     protected int MaxHealth;
-    protected float AttackRange;
-    protected float AttackCooldown;
-    protected int AttackDamge;
+    public float AttackRange;
+    public float AttackCooldown;
+    public int AttackDamge;
     protected Nav_Agent NavAgent;
+    Vector3 LastPathPointPos;
 
 
-    protected void Movement(Vector3 endPoint) 
+    public void Movement(Vector3 endPoint) 
     {
-        NavAgent.StartFollowPath(PathfindRequestManager.instance.RequestPath(transform.position, endPoint));
+        List<Vector3> path = PathfindRequestManager.instance.RequestPath(transform.position, endPoint);
+        int Index = path.Count - 1;
+        LastPathPointPos = path[Index];
+        NavAgent.StartFollowPath(path);
+    }
+
+    public Vector3 GetLastPointPos()
+    {
+        return LastPathPointPos;
     }
 
     public virtual void LoopUpdate() {}
 
-    protected void Attack()
+    public void Attack()
     {
 
     }

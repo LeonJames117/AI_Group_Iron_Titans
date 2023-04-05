@@ -8,10 +8,10 @@ public class BasicRangedBehaviour : MonoBehaviour
     
     bool ConditionFulfilled = true;
     TreeRoot mRoot;
-    public GameObject GameObject1;
-    public GameObject GameObject2;
-    public GameObject GameObject3;
-    public GameObject GameObject4;
+    public GameObject Player;
+    public GameObject PatrolPoint1;
+    public GameObject PatrolPoint2;
+    public GameObject PatrolPoint3;
     NavMeshAgent mAgent;
     public enum ActionState { IDLE, WORKING};
     ActionState mState = ActionState.IDLE;

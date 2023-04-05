@@ -8,15 +8,17 @@ public class FlockingBehaviour : MonoBehaviour
     
     bool ConditionFulfilled = true;
     TreeRoot mRoot;
-    public GameObject GameObject1;
-    public GameObject GameObject2;
-    public GameObject GameObject3;
-    public GameObject GameObject4;
-    NavMeshAgent mAgent;
+    public GameObject Player;
+    FlockingAI AI;
     public enum ActionState { IDLE, WORKING};
     ActionState mState = ActionState.IDLE;
 
     TreeNodes.Status mTreeStatus = TreeNodes.Status.RUNNING;
+
+    private void Awake()
+    {
+        AI = GetComponent<FlockingAI>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +63,7 @@ public class FlockingBehaviour : MonoBehaviour
     //Condition leaf.
     public TreeNodes.Status f_RegroupCondition()
     {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
+        if (AI.Health <= AI.Health * 0.25) return TreeNodes.Status.SUCCESS;
         return TreeNodes.Status.FAILURE;
     }
 
@@ -73,27 +75,26 @@ public class FlockingBehaviour : MonoBehaviour
 
     public TreeNodes.Status f_InRangeOfEnemies()
     {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
+        if (Vector3.Distance(Player.transform.position, transform.position) <= AI.AttackRange) return TreeNodes.Status.SUCCESS;
         return TreeNodes.Status.FAILURE;
     }
 
     //the Actions leafs.
     public TreeNodes.Status f_AttackEnemies()
     {
-        //return Movement(GameObject2.transform.position);
+        AI.Attack();
         return TreeNodes.Status.SUCCESS;
     }
 
     public TreeNodes.Status f_FindTarget()
     {
-        //return Movement(GameObject2.transform.position);
+        //put what the function is meant to do here.
         return TreeNodes.Status.SUCCESS;
     }
 
     public TreeNodes.Status f_MoveToTarget()
     {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
+        return Movement(Player.transform.position);
     }
 
     //Movement action to be called by action leafs.
@@ -102,10 +103,10 @@ public class FlockingBehaviour : MonoBehaviour
         float DistanceToTarget = Vector3.Distance(destination, this.transform.position);
         if(mState == ActionState.IDLE)
         {
-            mAgent.SetDestination(destination);
+            AI.Movement(destination);
             mState = ActionState.WORKING;
         }
-        else if(Vector3.Distance(mAgent.pathEndPosition, destination) >= 2)
+        else if(Vector3.Distance(AI.GetLastPointPos(), destination) >= 2)
         {
             mState = ActionState.IDLE;
             return TreeNodes.Status.FAILURE;
