@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
 
 
     [SerializeField] BoxCollider attackBox;
-    bool attacking = false;
+    public bool attacking = false;
 
     public enum MoveState
     {

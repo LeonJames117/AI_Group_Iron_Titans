@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     Character character;
+    [SerializeField] Animator body_animator;
+    [SerializeField] Animator sword_animator;
+    bool hasMoved = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +23,20 @@ public class PlayerController : MonoBehaviour
 
     void ProcessControls() 
     {
+        hasMoved = false;
         KeyboardProcess();
         MouseProcess();
+
+        if (hasMoved)
+        {
+            body_animator.SetBool("isMoving", true);
+            sword_animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            body_animator.SetBool("isMoving", false);
+            sword_animator.SetBool("isMoving", false);
+        }
     }
 
     void KeyboardProcess() 
@@ -48,13 +63,22 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) 
         {
-            character.Attack();
+            if (!character.attacking)
+            {
+                character.Attack();
+                sword_animator.SetBool("isAttacking", true);
+            }
+        }
+        else 
+        {
+            sword_animator.SetBool("isAttacking", false);
         }
 
         character.SetMoveDirection(dirVector);
         if (dirVector != Vector3.zero)//Set Move State
         {
             character.SetMoveState(Character.MoveState.WALKING);
+            hasMoved = true;
         }
         else 
         {

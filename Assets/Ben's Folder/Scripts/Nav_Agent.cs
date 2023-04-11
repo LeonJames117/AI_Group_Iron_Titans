@@ -25,8 +25,11 @@ public class Nav_Agent : MonoBehaviour
 
     [SerializeField] float destinationRadius;
 
+    [SerializeField] GameObject blood;
     float turnSpeed = 1.0f;
     bool stopMove = false;
+
+    [SerializeField] CameraShake cameraShake;
 
     //LineA
     //Line lineA;
@@ -218,6 +221,10 @@ public class Nav_Agent : MonoBehaviour
         if(other.tag == "AttackBox") 
         {
             print("ouch");
+            Transform t = new GameObject().transform;
+            t.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            Instantiate(blood, t.position, Quaternion.identity);
+            cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.3f));
             Destroy(gameObject);
         }
     }
