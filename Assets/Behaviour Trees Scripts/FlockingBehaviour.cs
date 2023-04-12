@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FlockingBehaviour : MonoBehaviour
+public class FlockingBehaviour : TreeActions
 {
     
-    bool ConditionFulfilled = true;
+   
     TreeRoot mRoot;
-    public GameObject Player;
-    FlockingAI AI;
-    public enum ActionState { IDLE, WORKING};
-    ActionState mState = ActionState.IDLE;
+    
+    
+    
 
     TreeNodes.Status mTreeStatus = TreeNodes.Status.RUNNING;
 
@@ -42,17 +41,17 @@ public class FlockingBehaviour : MonoBehaviour
         TreeLeaf MoveToTarget = new TreeLeaf("Move To Target", f_MoveToTarget);
 
         //adding leafs to sequence as children including a condition one then adding the sequece to the root.
+        RegroupSelector.AddChild(RegroupCondition);
+        RegroupSelector.AddChild(VisionCheck);
+        VisionCheck.AddChild(CanSeeEnemies);
+        VisionCheck.AddChild(AttackSelector);
+        AttackSelector.AddChild(RangeCheck);
         RangeCheck.AddChild(InRangeOfEnemies);
         RangeCheck.AddChild(AttackEnemies);
-        AttackSelector.AddChild(RangeCheck);
+        AttackSelector.AddChild(MoveToTargetAndAttack);
         MoveToTargetAndAttack.AddChild(FindTarget);
         MoveToTargetAndAttack.AddChild(MoveToTarget);
         MoveToTargetAndAttack.AddChild(AttackEnemies);
-        AttackSelector.AddChild(MoveToTargetAndAttack);
-        VisionCheck.AddChild(CanSeeEnemies);
-        VisionCheck.AddChild(AttackSelector);
-        RegroupSelector.AddChild(RegroupCondition);
-        RegroupSelector.AddChild(VisionCheck);
         mRoot.AddChild(RegroupSelector);
 
 
@@ -60,64 +59,7 @@ public class FlockingBehaviour : MonoBehaviour
 
     }
 
-    //Condition leaf.
-    public TreeNodes.Status f_RegroupCondition()
-    {
-        if (AI.Health <= AI.Health * 0.25) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    public TreeNodes.Status f_CanSeeEnemies()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    public TreeNodes.Status f_InRangeOfEnemies()
-    {
-        if (Vector3.Distance(Player.transform.position, transform.position) <= AI.AttackRange) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    //the Actions leafs.
-    public TreeNodes.Status f_AttackEnemies()
-    {
-        AI.Attack();
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_FindTarget()
-    {
-        //put what the function is meant to do here.
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_MoveToTarget()
-    {
-        return Movement(Player.transform.position);
-    }
-
-    //Movement action to be called by action leafs.
-    TreeNodes.Status Movement(Vector3 destination)
-    {
-        float DistanceToTarget = Vector3.Distance(destination, this.transform.position);
-        if(mState == ActionState.IDLE)
-        {
-            AI.Movement(destination);
-            mState = ActionState.WORKING;
-        }
-        else if(Vector3.Distance(AI.GetLastPointPos(), destination) >= 2)
-        {
-            mState = ActionState.IDLE;
-            return TreeNodes.Status.FAILURE;
-        }
-        else if(DistanceToTarget < 2)
-        {
-            mState = ActionState.IDLE;
-            return TreeNodes.Status.SUCCESS;
-        }
-        return TreeNodes.Status.RUNNING;
-    }
+   
 
 
     // Update is called once per frame

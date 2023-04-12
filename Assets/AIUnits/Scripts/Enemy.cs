@@ -28,9 +28,10 @@ public class Enemy : MonoBehaviour
 
     public virtual void LoopUpdate() {}
 
-    public void Attack()
+    public TreeNodes.Status Attack(Character player)
     {
-
+        player.health -= AttackDamge;
+        return TreeNodes.Status.SUCCESS;
     }
 
     protected void Heal(int amount)
