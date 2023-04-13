@@ -18,6 +18,7 @@ public class BasicRangedBehaviour : TreeActions
         PatrolPoints.Add(PatrolPoint1);
         PatrolPoints.Add(PatrolPoint2);
         PatrolPoints.Add(PatrolPoint3);
+        CurrentPatrolPoint = PatrolPoints.Count - 1;
     }
     // Start is called before the first frame update
     void Start()

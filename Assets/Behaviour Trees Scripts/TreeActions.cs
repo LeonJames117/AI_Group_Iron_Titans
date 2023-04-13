@@ -11,8 +11,7 @@ public class TreeActions : MonoBehaviour
     public enum ActionState { IDLE, WORKING };
     protected ActionState mState = ActionState.IDLE;
     protected List<GameObject> PatrolPoints = new List<GameObject>();
-    protected int CurrentPatrolPoint = 2;
-
+    protected int CurrentPatrolPoint;
 
     //Condition leaf.
 
