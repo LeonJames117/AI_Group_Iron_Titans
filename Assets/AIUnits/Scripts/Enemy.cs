@@ -5,12 +5,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int Health = 100;
-    protected int MaxHealth;
+    public int MaxHealth;
     public float AttackRange;
     public float AttackCooldown;
     public int AttackDamge;
     protected Nav_Agent NavAgent;
     Vector3 LastPathPointPos;
+    protected TreeActions BehaviourTree;
 
 
     public void Movement(Vector3 endPoint) 
@@ -26,7 +27,10 @@ public class Enemy : MonoBehaviour
         return LastPathPointPos;
     }
 
-    public virtual void LoopUpdate() {}
+    public virtual void LoopUpdate() 
+    {
+        BehaviourTree.TreeUpdate();
+    }
 
     public TreeNodes.Status Attack(Character player)
     {

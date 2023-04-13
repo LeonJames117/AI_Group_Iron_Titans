@@ -6,21 +6,25 @@ using UnityEngine.AI;
 public class BasicMeleeBehaviour : TreeActions
 {
 
-    TreeRoot mRoot;
-    public GameObject GameObject1;
-    public GameObject GameObject2;
-    public GameObject GameObject3;
-    public GameObject GameObject4;
-    NavMeshAgent mAgent;
+    
+    public GameObject PatrolPoint1;
+    public GameObject PatrolPoint2;
+    public GameObject PatrolPoint3;
 
 
     TreeNodes.Status mTreeStatus = TreeNodes.Status.RUNNING;
+    private void Awake()
+    {
+        AI = GetComponent<MeleeAI>();
+        PatrolPoints.Add(PatrolPoint1);
+        PatrolPoints.Add(PatrolPoint2);
+        PatrolPoints.Add(PatrolPoint3);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //uncomment when when nave mesh is attached to model.
-        //mAgent = this.GetComponent<NavMeshAgent>();
+        
 
         //make the root node of the entity behaviour tree.
         mRoot = new TreeRoot();
@@ -66,13 +70,4 @@ public class BasicMeleeBehaviour : TreeActions
 
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        //will run tree if the tree status is no success full will need to adapted this so it is the right one for the right entity behavior.
-        if(mTreeStatus != TreeNodes.Status.SUCCESS)
-        {
-            mTreeStatus = mRoot.Process();
-        }
-    }
 }

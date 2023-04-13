@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MeleeAI : Enemy
 {
-    BasicMeleeBehaviour BehaviourTree;
 
     private void Awake()
     {
@@ -14,6 +13,11 @@ public class MeleeAI : Enemy
 
     public override void LoopUpdate()
     {
-        
+        base.LoopUpdate();
+    }
+
+    private void Update()
+    {
+        LoopUpdate();
     }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FlockingAI : Enemy
 {
-    FlockingBehaviour BehaviourTree;
     private void Awake()
     {
         FloackingSetUp();
@@ -13,6 +12,11 @@ public class FlockingAI : Enemy
 
     public override void LoopUpdate()
     {
-        
+        base.LoopUpdate();
+    }
+
+    private void Update()
+    {
+        LoopUpdate();
     }
 }

@@ -49,12 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d668d53c11cf3489a705fba0073115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 5
   body: {fileID: 8918884090062146355}
-  pathSmoothingBoundary: 0
+  pathSmoothingBoundary: 4
   ng: {fileID: 0}
-  destinationRadius: 0
-  smoothTurnSpeed: 2
+  destinationRadius: 2
+  smoothTurnSpeed: 1
 --- !u!114 &7211698883054544349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +67,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd3e743b8359db4faaf7f8fbcc11c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  AttackRange: 0
+  AttackCooldown: 0
+  AttackDamge: 0
 --- !u!114 &967699178982217291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,10 +83,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eef89435a5d269041acd3ce392f95a1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameObject1: {fileID: 0}
-  GameObject2: {fileID: 0}
-  GameObject3: {fileID: 0}
-  GameObject4: {fileID: 0}
+  Player: {fileID: 0}
+  PatrolPoint1: {fileID: 0}
+  PatrolPoint2: {fileID: 0}
+  PatrolPoint3: {fileID: 0}
 --- !u!65 &7471260840847570323
 BoxCollider:
   m_ObjectHideFlags: 0

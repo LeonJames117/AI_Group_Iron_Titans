@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class TreeActions : MonoBehaviour
 {
-
-    protected bool ConditionFulfilled = true;
+    protected TreeRoot mRoot;
+    protected bool ConditionFulfilled = false;
     protected Enemy AI;
     public Character Player;
     public enum ActionState { IDLE, WORKING };
     protected ActionState mState = ActionState.IDLE;
     protected List<GameObject> PatrolPoints = new List<GameObject>();
-    protected int CurrentPatrolPoint = 0;
+    protected int CurrentPatrolPoint = 2;
 
 
     //Condition leaf.
 
     public TreeNodes.Status f_FleeCondition()
     {
-        if (AI.Health <= AI.Health * 0.25) return TreeNodes.Status.SUCCESS;
+        if (AI.Health <= AI.MaxHealth * 0.25) return TreeNodes.Status.SUCCESS;
         return TreeNodes.Status.FAILURE;
     }
 
     public TreeNodes.Status f_RegroupCondition()
     {
-        if (AI.Health <= AI.Health * 0.25) return TreeNodes.Status.SUCCESS;
+        if (AI.Health <= AI.MaxHealth * 0.25) return TreeNodes.Status.SUCCESS;
         return TreeNodes.Status.FAILURE;
     }
 
@@ -74,7 +74,7 @@ public class TreeActions : MonoBehaviour
 
     public TreeNodes.Status f_MoveToNextPoint()
     {
-        return Movement(PatrolPoints[CurrentPatrolPoint].transform.position);
+        return PatrolMovement(PatrolPoints[CurrentPatrolPoint].transform.position);
     }
 
     //Movement action to be called by action leafs.
@@ -91,6 +91,22 @@ public class TreeActions : MonoBehaviour
             mState = ActionState.IDLE;
             return TreeNodes.Status.FAILURE;
         }
+        else if (DistanceToTarget < AI.AttackRange)
+        {
+            mState = ActionState.IDLE;
+            return TreeNodes.Status.SUCCESS;
+        }
+        return TreeNodes.Status.RUNNING;
+    }
+
+    TreeNodes.Status PatrolMovement(Vector3 destination)
+    {
+        float DistanceToTarget = Vector3.Distance(destination, this.transform.position);
+        AI.Movement(destination);
+        if (mState == ActionState.IDLE)
+        {
+            mState = ActionState.WORKING;
+        }
         else if (DistanceToTarget < 2)
         {
             mState = ActionState.IDLE;
@@ -98,4 +114,11 @@ public class TreeActions : MonoBehaviour
         }
         return TreeNodes.Status.RUNNING;
     }
+
+    public void TreeUpdate()
+    {
+        mRoot.Process();
+    }
+
+
 }
