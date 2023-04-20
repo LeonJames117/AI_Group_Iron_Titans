@@ -153,12 +153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flocking_Prefab: {fileID: 4008357555048862016, guid: 947206e1fc06446499bb5f7bcbdd78c0, type: 3}
-  Behavior: {fileID: 0}
-  Agent_Count: 5
+  All_Agents: []
+  Behavior: {fileID: 11400000, guid: 488b0b3171680874cadf86c04b5ff4e6, type: 2}
+  Agent_Count: 30
   Speed_Mulitplier: 5.4
   Max_Speed: 5
-  Detection_Radius: 1.5
-  Avoidance_Radius: 0.5
+  Detection_Radius: 2
+  Avoidance_Radius: 0.884
 --- !u!4 &116897005
 Transform:
   m_ObjectHideFlags: 0
@@ -166,14 +167,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116897003}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: -90}
 --- !u!1 &1098103908
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,23 +64,23 @@ public class Flocking_Controller : MonoBehaviour
     void Update()
     {
 
-        //foreach (var agent in All_Agents)
-        //{
-        //    //Finds all neighbours in detection raduis
-        //    List<Transform> World = GetNearbyObjects(agent);
-        //    Vector3 Move = Behavior.Caculate_Movement(agent, World, this);
-        //    Move *= Speed_Mulitplier;
-        //    if(Move.sqrMagnitude > Square_Max_Speed)
-        //    {
-        //        //Reset move to 1 and multiply by max speed
-        //        Move= Move.normalized*Max_Speed;
-        //    }
-        //    agent.Move_To(Move);
-        //}
+        foreach (var agent in All_Agents)
+        {
+            //Finds all neighbours in detection raduis
+            List<Transform> World = GetNearbyObjects(agent);
+            Vector3 Move = Behavior.Caculate_Movement(agent, World, this);
+            Move *= Speed_Mulitplier;
+            if (Move.sqrMagnitude > Square_Max_Speed)
+            {
+                //Reset move to 1 and multiply by max speed
+                Move = Move.normalized * Max_Speed;
+            }
+            agent.Move_To(Move);
+        }
 
-            
-        
-        
+
+
+
     }
 
 
