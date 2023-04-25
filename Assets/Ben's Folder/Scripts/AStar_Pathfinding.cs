@@ -42,7 +42,7 @@ public class AStar_Pathfinding : MonoBehaviour
 
                 bool inOpenList = openHeap.Contains(neighbour);
 
-                if (new_gCost > neighbour.gCost || !inOpenList) 
+                if (new_gCost < neighbour.gCost || !inOpenList) 
                 {
                     neighbour.gCost = new_gCost;
                     neighbour.hCost = CalculateDistanceBetweenNodes(neighbour, endNode);

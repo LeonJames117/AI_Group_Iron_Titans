@@ -41,7 +41,6 @@ public class TestController : MonoBehaviour
         endPos.y = 0;
 
         
-
         if((startPos - endPos).magnitude > 2.0) 
         {
             List<Vector3> path = PathfindRequestManager.instance.RequestPath(startPos, endPos);
