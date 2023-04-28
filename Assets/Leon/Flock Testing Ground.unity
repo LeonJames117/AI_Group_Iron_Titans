@@ -153,7 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flocking_Prefab: {fileID: 4008357555048862016, guid: 947206e1fc06446499bb5f7bcbdd78c0, type: 3}
-  All_Agents: []
+  All_Agents:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   Behavior: {fileID: 11400000, guid: 488b0b3171680874cadf86c04b5ff4e6, type: 2}
   Agent_Count: 30
   Speed_Mulitplier: 5.4
