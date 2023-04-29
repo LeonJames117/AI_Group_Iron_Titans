@@ -8,7 +8,7 @@ public class Flocking_Together : Flocking_Behavior
     // Start is called before the first frame update
     public Flocking_Behavior[] Behaviors;
     public float[] Weights;
-    public override Vector3 Caculate_Movement(Flocking_Agent Current_Agent, List<Transform> World_Context, Flocking_Controller Controller,Flocking_Leader Leader)
+    public override Vector3 Caculate_Movement(Flocking_Agent Current_Agent, List<Transform> World_Context, Flocking_Controller Controller, Transform Leader)
     {
         if(Behaviors.Length != Weights.Length)
         {
@@ -35,9 +35,11 @@ public class Flocking_Together : Flocking_Behavior
             }
         }
 
-        Vector3 Lead_Offset = Vector3.Normalize(Leader.transform.position);
-        Final_Move = Final_Move + Lead_Offset;
-
+        Vector3 Lead_Offset = Leader.transform.position;
+        Debug.Log("Lead offset = " + Lead_Offset);
+        //Final_Move = Final_Move - Lead_Offset;
+        
+        
         return Final_Move;
 
     }

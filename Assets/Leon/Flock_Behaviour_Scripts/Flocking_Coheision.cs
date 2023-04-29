@@ -10,7 +10,7 @@ public class Flocking_Coheision : Flocking_Behavior
 {
     Vector3 Smoothing_Vel;
     public float Coheision_Smoohting = 0.5f;
-    public override Vector3 Caculate_Movement(Flocking_Agent Current_Agent, List<Transform> World_Context, Flocking_Controller Controller, Flocking_Leader Leader)
+    public override Vector3 Caculate_Movement(Flocking_Agent Current_Agent, List<Transform> World_Context, Flocking_Controller Controller, Transform Leader)
     {
        if(World_Context.Count==0)
         {
