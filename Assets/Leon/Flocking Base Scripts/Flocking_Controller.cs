@@ -22,7 +22,7 @@ public class Flocking_Controller : MonoBehaviour
     //Neighbour Detection and avoidance
     [Range(1f, 10f)]
     public float Detection_Radius= 1.5f;
-    [Range(0f, 2f)]
+    [Range(0f, 5f)]
     public float Avoidance_Radius= 0.5f;
     float Square_Detection_Radius;
     float Square_Avoidance_Radius;
