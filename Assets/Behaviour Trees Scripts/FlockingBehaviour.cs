@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FlockingBehaviour : MonoBehaviour
+public class FlockingBehaviour : TreeActions
 {
     
-    bool ConditionFulfilled = true;
-    TreeRoot mRoot;
-    public GameObject GameObject1;
-    public GameObject GameObject2;
-    public GameObject GameObject3;
-    public GameObject GameObject4;
-    NavMeshAgent mAgent;
-    public enum ActionState { IDLE, WORKING};
-    ActionState mState = ActionState.IDLE;
 
     TreeNodes.Status mTreeStatus = TreeNodes.Status.RUNNING;
+
+    private void Awake()
+    {
+        AI = GetComponent<FlockingAI>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -40,17 +36,17 @@ public class FlockingBehaviour : MonoBehaviour
         TreeLeaf MoveToTarget = new TreeLeaf("Move To Target", f_MoveToTarget);
 
         //adding leafs to sequence as children including a condition one then adding the sequece to the root.
+        RegroupSelector.AddChild(RegroupCondition);
+        RegroupSelector.AddChild(VisionCheck);
+        VisionCheck.AddChild(CanSeeEnemies);
+        VisionCheck.AddChild(AttackSelector);
+        AttackSelector.AddChild(RangeCheck);
         RangeCheck.AddChild(InRangeOfEnemies);
         RangeCheck.AddChild(AttackEnemies);
-        AttackSelector.AddChild(RangeCheck);
+        AttackSelector.AddChild(MoveToTargetAndAttack);
         MoveToTargetAndAttack.AddChild(FindTarget);
         MoveToTargetAndAttack.AddChild(MoveToTarget);
         MoveToTargetAndAttack.AddChild(AttackEnemies);
-        AttackSelector.AddChild(MoveToTargetAndAttack);
-        VisionCheck.AddChild(CanSeeEnemies);
-        VisionCheck.AddChild(AttackSelector);
-        RegroupSelector.AddChild(RegroupCondition);
-        RegroupSelector.AddChild(VisionCheck);
         mRoot.AddChild(RegroupSelector);
 
 
@@ -58,74 +54,5 @@ public class FlockingBehaviour : MonoBehaviour
 
     }
 
-    //Condition leaf.
-    public TreeNodes.Status f_RegroupCondition()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    public TreeNodes.Status f_CanSeeEnemies()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    public TreeNodes.Status f_InRangeOfEnemies()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    //the Actions leafs.
-    public TreeNodes.Status f_AttackEnemies()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_FindTarget()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_MoveToTarget()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    //Movement action to be called by action leafs.
-    TreeNodes.Status Movement(Vector3 destination)
-    {
-        float DistanceToTarget = Vector3.Distance(destination, this.transform.position);
-        if(mState == ActionState.IDLE)
-        {
-            mAgent.SetDestination(destination);
-            mState = ActionState.WORKING;
-        }
-        else if(Vector3.Distance(mAgent.pathEndPosition, destination) >= 2)
-        {
-            mState = ActionState.IDLE;
-            return TreeNodes.Status.FAILURE;
-        }
-        else if(DistanceToTarget < 2)
-        {
-            mState = ActionState.IDLE;
-            return TreeNodes.Status.SUCCESS;
-        }
-        return TreeNodes.Status.RUNNING;
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        //will run tree if the tree status is no success full will need to adapted this so it is the right one for the right entity behavior.
-        if(mTreeStatus != TreeNodes.Status.SUCCESS)
-        {
-            mTreeStatus = mRoot.Process();
-        }
-    }
+   
 }

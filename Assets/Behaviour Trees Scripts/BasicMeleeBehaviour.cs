@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BasicMeleeBehaviour : MonoBehaviour
+public class BasicMeleeBehaviour : TreeActions
 {
+
     
-    bool ConditionFulfilled = true;
-    TreeRoot mRoot;
-    public GameObject GameObject1;
-    public GameObject GameObject2;
-    public GameObject GameObject3;
-    public GameObject GameObject4;
-    NavMeshAgent mAgent;
-    public enum ActionState { IDLE, WORKING};
-    ActionState mState = ActionState.IDLE;
+    public GameObject PatrolPoint1;
+    public GameObject PatrolPoint2;
+    public GameObject PatrolPoint3;
+
 
     TreeNodes.Status mTreeStatus = TreeNodes.Status.RUNNING;
+    private void Awake()
+    {
+        AI = GetComponent<MeleeAI>();
+        PatrolPoints.Add(PatrolPoint1);
+        PatrolPoints.Add(PatrolPoint2);
+        PatrolPoints.Add(PatrolPoint3);
+        CurrentPatrolPoint = PatrolPoints.Count - 1;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //uncomment when when nave mesh is attached to model.
-        //mAgent = this.GetComponent<NavMeshAgent>();
+        
 
         //make the root node of the entity behaviour tree.
         mRoot = new TreeRoot();
@@ -43,20 +46,20 @@ public class BasicMeleeBehaviour : MonoBehaviour
         TreeLeaf MoveToNextPoint = new TreeLeaf("Move To Next Point", f_MoveToNextPoint);
 
         //adding leafs to sequence as children including a condition one then adding the sequece to the root.
+        PatrolSelector.AddChild(FleeCondition);
+        PatrolSelector.AddChild(VisionCheck);
+        VisionCheck.AddChild(CanSeeEnemies);
+        VisionCheck.AddChild(AttackSelector);
+        AttackSelector.AddChild(RangeCheck);
         RangeCheck.AddChild(InRangeOfEnemies);
         RangeCheck.AddChild(AttackEnemies);
-        AttackSelector.AddChild(RangeCheck);
+        AttackSelector.AddChild(MoveToTargetAndAttack);
         MoveToTargetAndAttack.AddChild(FindTarget);
         MoveToTargetAndAttack.AddChild(MoveToTarget);
         MoveToTargetAndAttack.AddChild(AttackEnemies);
-        AttackSelector.AddChild(MoveToTargetAndAttack);
-        VisionCheck.AddChild(CanSeeEnemies);
-        VisionCheck.AddChild(AttackSelector);
-        PatrolSelector.AddChild(FleeCondition);
-        PatrolSelector.AddChild(VisionCheck);
+        PatrolSelector.AddChild(Patrol);
         Patrol.AddChild(FindNextPoint);
         Patrol.AddChild(MoveToNextPoint);
-        PatrolSelector.AddChild(Patrol);
         mRoot.AddChild(PatrolSelector);
 
 
@@ -64,86 +67,8 @@ public class BasicMeleeBehaviour : MonoBehaviour
 
     }
 
-    //Condition leaf.
-    public TreeNodes.Status f_FleeCondition()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    public TreeNodes.Status f_CanSeeEnemies()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    public TreeNodes.Status f_InRangeOfEnemies()
-    {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
-        return TreeNodes.Status.FAILURE;
-    }
-
-    //the Actions leafs.
-    public TreeNodes.Status f_FindNextPoint()
-    {
-        //return Movement(GameObject1.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_MoveToNextPoint()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_AttackEnemies()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_FindTarget()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    public TreeNodes.Status f_MoveToTarget()
-    {
-        //return Movement(GameObject2.transform.position);
-        return TreeNodes.Status.SUCCESS;
-    }
-
-    //Movement action to be called by action leafs.
-    TreeNodes.Status Movement(Vector3 destination)
-    {
-        float DistanceToTarget = Vector3.Distance(destination, this.transform.position);
-        if(mState == ActionState.IDLE)
-        {
-            mAgent.SetDestination(destination);
-            mState = ActionState.WORKING;
-        }
-        else if(Vector3.Distance(mAgent.pathEndPosition, destination) >= 2)
-        {
-            mState = ActionState.IDLE;
-            return TreeNodes.Status.FAILURE;
-        }
-        else if(DistanceToTarget < 2)
-        {
-            mState = ActionState.IDLE;
-            return TreeNodes.Status.SUCCESS;
-        }
-        return TreeNodes.Status.RUNNING;
-    }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        //will run tree if the tree status is no success full will need to adapted this so it is the right one for the right entity behavior.
-        if(mTreeStatus != TreeNodes.Status.SUCCESS)
-        {
-            mTreeStatus = mRoot.Process();
-        }
-    }
+
+
 }
