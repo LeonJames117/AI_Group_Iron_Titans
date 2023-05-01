@@ -19,7 +19,11 @@ public class Flocking_Agent : MonoBehaviour
         //Face new destination
         transform.forward = Destination;
         //Movement
-        transform.position += Destination * Time.deltaTime;
+        float NewX = transform.position.x;
+        float NewZ = transform.position.z;
+        NewX+= Destination.x * Time.deltaTime;
+        NewZ += Destination.z * Time.deltaTime;
+        transform.position = new Vector3(NewX,0.86f, NewZ);
     }
    
     

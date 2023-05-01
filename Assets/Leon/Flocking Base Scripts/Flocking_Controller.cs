@@ -22,11 +22,16 @@ public class Flocking_Controller : MonoBehaviour
     //Neighbour Detection and avoidance
     [Range(1f, 10f)]
     public float Detection_Radius= 1.5f;
-    [Range(0f, 1f)]
+    [Range(0f, 5f)]
     public float Avoidance_Radius= 0.5f;
     float Square_Detection_Radius;
     float Square_Avoidance_Radius;
     public float Square_Avoidance_Radius_Access { get { return Square_Avoidance_Radius; } }
+
+    public Transform Flock_Lead;
+
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -35,40 +40,46 @@ public class Flocking_Controller : MonoBehaviour
         Square_Detection_Radius = Detection_Radius * Detection_Radius;
         Square_Avoidance_Radius = Square_Detection_Radius * Avoidance_Radius * Avoidance_Radius;
 
-        //Setup Flock
-        for(int i = 0; i < Agent_Count; i++)
-        {
-            Vector3 Random_Pos_in_Cir = Random.insideUnitCircle * Agent_Count * Density;
 
-            
-            if (!Physics.CheckSphere(Random_Pos_in_Cir, 0.5f))
-            {
-                Flocking_Agent New_Agent = Instantiate(Flocking_Prefab,Random_Pos_in_Cir , Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)), transform);
-                print("Agent " + i + " Instaticated");
-                New_Agent.name = "Flocking_Agent " + i;
-                print("Agent " + i + " Added to array");
-                All_Agents.Add(New_Agent);
-            }
-            else
-            {
-                print("Overlap detected on " + "Agent " + i);
-                i--;
-            }
-            
-            
-            
-        }
+        //Pathfinding
+        //
+
+        //Setup Flock
+        //for (int i = 0; i < Agent_Count; i++)
+        //{
+        //    Vector3 Random_Pos_in_Cir = Random.insideUnitCircle * (Agent_Count * Density) /2;
+
+
+        //    if (!Physics.CheckSphere(Random_Pos_in_Cir, 0.5f))
+        //    {
+        //        Flocking_Agent New_Agent = Instantiate(Flocking_Prefab, Random_Pos_in_Cir, Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)), transform);
+        //        print("Agent " + i + " Instaticated");
+        //        New_Agent.name = "Flocking_Agent " + i;
+        //        print("Agent " + i + " Added to array");
+        //        All_Agents.Add(New_Agent);
+        //    }
+        //    else
+        //    {
+        //        print("Overlap detected on " + "Agent " + i);
+        //        i--;
+        //    }
+
+
+
+        //}
     }
 
     // Update is called once per frame
     void Update()
     {
 
+        //NavA.StartFollowPath(Pathing.Pathfind(this.transform.position,FindObjectOfType<PlayerController>().transform.position));
+
         foreach (var agent in All_Agents)
         {
             //Finds all neighbours in detection raduis
             List<Transform> World = GetNearbyObjects(agent);
-            Vector3 Move = Behavior.Caculate_Movement(agent, World, this);
+            Vector3 Move = Behavior.Caculate_Movement(agent, World, this, Flock_Lead);
             Move *= Speed_Mulitplier;
             if (Move.sqrMagnitude > Square_Max_Speed)
             {
