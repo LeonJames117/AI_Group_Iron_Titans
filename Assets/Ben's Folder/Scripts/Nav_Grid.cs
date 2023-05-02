@@ -173,11 +173,14 @@ public class Nav_Grid : MonoBehaviour
                     continue;
                 }
                 
-                if(((!grid[xCoord, yCoord].isObstructed) ||(grid[xCoord, yCoord] == endNode)) &&
-                   (xCoord >= 0 && xCoord <= gridSizeX) &&
+                if((xCoord >= 0 && xCoord <= gridSizeX) &&
                    (yCoord >= 0 && xCoord <= gridSizeY)) 
                 {
-                    neighbours.Add(grid[xCoord, yCoord]);
+
+                    if(((!grid[xCoord, yCoord].isObstructed) || (grid[xCoord, yCoord] == endNode))) 
+                    {
+                        neighbours.Add(grid[xCoord, yCoord]);
+                    }
                 }
             }
         }
