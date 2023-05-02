@@ -7,7 +7,6 @@ public class Nav_Agent : MonoBehaviour
     List<Vector3> waypoints;
     int waypoint_index = 0;
     bool followingPath = false;
-    float tolerance = 0.1f;
     [SerializeField] float speed = 100.0f;
     Vector3 direction;
     Vector2 targetDirection;
@@ -16,75 +15,26 @@ public class Nav_Agent : MonoBehaviour
     [SerializeField] GameObject body;
     [SerializeField] float pathSmoothingBoundary;
     float distanceToWaypoint;
-    Vector2 startSmoothDir;
-    Vector2 endSmoothDir;
-    bool smoothing;
-    float smoothDelta = 0.0f;
+
 
     [SerializeField] Nav_Grid ng;
 
     [SerializeField] float destinationRadius;
 
     [SerializeField] GameObject blood;
-    float turnSpeed = 1.0f;
     bool stopMove = false;
 
     [SerializeField] CameraShake cameraShake;
-
-    //LineA
-    //Line lineA;
-    //Line perp_lineA;
-    //Vector2 lineA_BoundaryIntercept;
-
-    ////LineB
-    //Line lineB;
-    //Line perp_lineB;
-    //Vector2 lineB_BoundaryIntercept;
-
-    //float startSmoothingAngle;
-    //float endSmoothingAngle;
-
     [SerializeField] float smoothTurnSpeed = 2.0f;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip hit_audioClip;
 
     private void Start()
     {
         ChangeDirection(transform.forward);
-        //lineA = new Line(waypoints[waypoint_index], waypoints[waypoint_index + 1]);
     }
 
-    void CalculateWaypointLines() 
-    {
-        //Vector3 startA = waypoints[waypoint_index - 1];
-        //Vector3 endA = waypoints[waypoint_index];
-
-        //Vector3 startB = waypoints[waypoint_index];
-        //Vector3 endB = waypoints[waypoint_index + 1];
-
-        //Vector2 startPointA = new Vector2(startA.x, startA.z);
-        //Vector2 endPointA = new Vector2(endA.x, endA.z);
-        //lineA = new Line(startPointA, endPointA);
-
-        //Vector2 startPointB = new Vector2(startB.x, startB.z);
-        //Vector2 endPointB = new Vector2(endB.x, endB.z);
-        //lineB = new Line(startPointB, endPointB);
-    }
-
-    void CalculatePerpendicularBoundaries() 
-    {
-        ////Calculate perpendicular line to line A
-        //float lineA_displaceX = lineA.gradient * pathSmoothingBoundary;
-        //float lineA_displaceY = (1 / lineA.gradient) * pathSmoothingBoundary;
-
-        //lineA_BoundaryIntercept = new Vector2(lineA.endPoint.x - lineA_displaceX, lineA.endPoint.y - lineA_displaceY);
-        //perp_lineA = lineA.CalculatePerpendicularLine(lineA_BoundaryIntercept);
-        
-        ////Calculate perpendicular line to line B
-        //float lineB_displaceX = lineB.gradient * pathSmoothingBoundary;
-        //float lineB_displaceY = (1 / lineB.gradient) * pathSmoothingBoundary;
-
-        //lineB_BoundaryIntercept = new Vector2(lineB.endPoint.x - lineB_displaceX, lineB.endPoint.y - lineB_displaceY);
-        //perp_lineB = lineB.CalculatePerpendicularLine(lineB_BoundaryIntercept);
-    }
 
     public void StartFollowPath(List<Vector3> path) 
     {
@@ -121,18 +71,8 @@ public class Nav_Agent : MonoBehaviour
 
     void FollowPath() 
     {
-        //ProcessArrivedAtWaypoint();
-
         if (ProcessTurn()) 
         {
-            //Vector3 td = new Vector3(targetDirection.x, 0, targetDirection.y);
-
-            //float angle = Mathf.Acos((Vector2.Dot(direction, td)) /
-            //              (direction.magnitude * td.magnitude));
-
-            //angle = Mathf.Rad2Deg * angle;
-            //print("angle: " + angle);
-
             if (!stopMove)
             {
                transform.position += direction * speed * Time.deltaTime;
@@ -157,7 +97,6 @@ public class Nav_Agent : MonoBehaviour
         targetDirection = targetDirection.normalized;
         Vector2 rightVector = new Vector2(rightPerpendicular_direction.x, rightPerpendicular_direction.z);
 
-        //print("dist: " + distanceToWaypoint);
 
         //compare right vector to target vector        
         float angle = Mathf.Acos((Vector2.Dot(targetDirection, rightVector)) / 
@@ -176,13 +115,20 @@ public class Nav_Agent : MonoBehaviour
 
         if (angle < 90)//turn left
         {
-            ChangeDirection(RotateVector(direction, 200 * Time.deltaTime));
-            //body.transform.forward = direction;
+            if(90 - angle > 5) 
+            {
+
+                ChangeDirection(RotateVector(direction, 150 * Time.deltaTime));
+            }
+            
         }
         else //turn right
         {
-            ChangeDirection(RotateVector(direction, -200 * Time.deltaTime));
-            //body.transform.forward = direction;
+            if (angle - 90 > 5)
+            {
+                ChangeDirection(RotateVector(direction, -150 * Time.deltaTime));
+            }
+            
         }
 
         if(waypoint_index > waypoints.Count - 2)//coming to last waypoint 
@@ -206,7 +152,7 @@ public class Nav_Agent : MonoBehaviour
         return true;
     }
 
-    void CompletePath()
+    public void CompletePath()
     {
         StopFollowingPath();
     }
@@ -224,7 +170,8 @@ public class Nav_Agent : MonoBehaviour
             Transform t = new GameObject().transform;
             t.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             Instantiate(blood, t.position, Quaternion.identity);
-            cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.3f));
+            cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
+            audioSource.PlayOneShot(hit_audioClip, 0.3f);
             Destroy(gameObject);
         }
     }

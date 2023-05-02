@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator sword_animator;
     bool hasMoved = false;
 
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip whoosh_audioClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +69,7 @@ public class PlayerController : MonoBehaviour
             if (!character.attacking)
             {
                 character.Attack();
+                audioSource.PlayOneShot(whoosh_audioClip, 0.05f);
                 sword_animator.SetBool("isAttacking", true);
             }
         }
