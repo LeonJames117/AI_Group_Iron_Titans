@@ -30,7 +30,7 @@ public class TreeActions : MonoBehaviour
     //Waiting on vision to get added to the AI.
     public TreeNodes.Status f_CanSeeEnemies()
     {
-        if (ConditionFulfilled) return TreeNodes.Status.SUCCESS;
+        if (AI.PlayerInSight) return TreeNodes.Status.SUCCESS;
         return TreeNodes.Status.FAILURE;
     }
 
@@ -88,11 +88,13 @@ public class TreeActions : MonoBehaviour
         else if (Vector3.Distance(AI.GetLastPointPos(), destination) >= AI.AttackRange)
         {
             mState = ActionState.IDLE;
+            AI.StopMovement();
             return TreeNodes.Status.FAILURE;
         }
         else if (DistanceToTarget < AI.AttackRange)
         {
             mState = ActionState.IDLE;
+            AI.StopMovement();
             return TreeNodes.Status.SUCCESS;
         }
         return TreeNodes.Status.RUNNING;
@@ -105,6 +107,12 @@ public class TreeActions : MonoBehaviour
         if (mState == ActionState.IDLE)
         {
             mState = ActionState.WORKING;
+        }
+        else if(AI.PlayerInSight)
+        {
+            mState = ActionState.IDLE;
+            AI.StopMovement();
+            return TreeNodes.Status.SUCCESS;
         }
         else if (DistanceToTarget < 2)
         {

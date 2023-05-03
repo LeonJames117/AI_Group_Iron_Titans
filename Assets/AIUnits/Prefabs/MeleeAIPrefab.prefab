@@ -54,7 +54,11 @@ MonoBehaviour:
   pathSmoothingBoundary: 4
   ng: {fileID: 0}
   destinationRadius: 2
+  blood: {fileID: 0}
+  cameraShake: {fileID: 0}
   smoothTurnSpeed: 1
+  audioSource: {fileID: 0}
+  hit_audioClip: {fileID: 0}
 --- !u!114 &5377736327034729960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,9 +72,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 100
+  MaxHealth: 0
   AttackRange: 0
   AttackCooldown: 0
   AttackDamge: 0
+  Target: {fileID: 0}
+  Body: {fileID: 8918884090062146355}
+  TargetLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  Obstructions:
+    serializedVersion: 2
+    m_Bits: 64
+  PlayerInSight: 0
+  VisRadius: 10
+  VisAngle: 0
 --- !u!114 &6854006191281044540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,10 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  GameObject1: {fileID: 0}
-  GameObject2: {fileID: 0}
-  GameObject3: {fileID: 0}
-  GameObject4: {fileID: 0}
+  PatrolPoint1: {fileID: 0}
+  PatrolPoint2: {fileID: 0}
+  PatrolPoint3: {fileID: 0}
 --- !u!65 &7471260840847570323
 BoxCollider:
   m_ObjectHideFlags: 0

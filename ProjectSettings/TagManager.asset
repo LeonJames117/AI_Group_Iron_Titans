@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - AttackBox
+  - AI
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Nav_Path
   - Nav_Grass
   - Nav_Mud
-  - 
+  - Player
   - 
   - 
   - 
