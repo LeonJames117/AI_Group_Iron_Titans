@@ -25,7 +25,11 @@ public class Flocking_Agent : MonoBehaviour
         NewZ += Destination.z * Time.deltaTime;
         transform.position = new Vector3(NewX,0.86f, NewZ);
     }
-   
+
+    public bool Range_Check(Vector3 Target, float Range)
+    {
+        return Vector3.Distance(Target, transform.position) <= Range;
+    }
     
     
     

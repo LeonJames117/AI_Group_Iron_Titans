@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     protected Nav_Agent NavAgent;
     Vector3 LastPathPointPos;
     protected TreeActions BehaviourTree;
+    public string Type = "";
     public GameObject Target;
     public GameObject Body;
     public LayerMask TargetLayer;
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator FOV_Run()
     {
-        float Wait_Time = 0.5f;
+        float Wait_Time = 0.05f;
         WaitForSeconds Delay = new WaitForSeconds(Wait_Time);
 
         while (true)
@@ -52,7 +53,14 @@ public class Enemy : MonoBehaviour
         {
             print("PlayerInSight");
             Vector3 Target_Pos = Vision[0].transform.position;
-            Vector3 Target_Direction = (Vision[0].transform.position - transform.position).normalized;
+            Vector3 TargetNoY = new Vector3(Target_Pos.x, 0, Target_Pos.z);
+            Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
+            Vector3 Target_Direction = (TargetNoY - BodyNoY).normalized;
+            
+            Quaternion Look_At = Quaternion.LookRotation(TargetNoY - BodyNoY);
+            
+            Body.transform.rotation = Quaternion.Slerp(Body.transform.rotation, Look_At, 50 * Time.deltaTime);
+            
             if (Vector3.Angle(Body.transform.forward, Target_Direction) < VisAngle / 2)
             {
                 print("Passed if 1");
@@ -61,6 +69,7 @@ public class Enemy : MonoBehaviour
                 {
                     print("Passed if 2");
                     PlayerInSight = true;
+                         
                 }
                 else
                 {
@@ -88,6 +97,7 @@ public class Enemy : MonoBehaviour
 
     public void StopMovement()
     {
+        print("Stopped");
         NavAgent.CompletePath();
     }
 
@@ -95,9 +105,16 @@ public class Enemy : MonoBehaviour
 
     public void Movement(Vector3 endPoint) 
     {
-        List<Vector3> path = PathfindRequestManager.instance.RequestPath(transform.position, endPoint);
+        Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
+        List<Vector3> path = PathfindRequestManager.instance.RequestPath(BodyNoY, endPoint);
+        if (path.Count == 0)
+        {
+            print("Path is Null");
+            return;
+        }
         int Index = path.Count - 1;
         LastPathPointPos = path[Index];
+        print("Currently Moving");
         NavAgent.StartFollowPath(path);
     }
 
@@ -111,15 +128,17 @@ public class Enemy : MonoBehaviour
         BehaviourTree.TreeUpdate();
     }
 
-    public TreeNodes.Status Attack(Character player)
+    public TreeNodes.Status Attack(PlayerCharacter player)
     {
         if (Time.time >= EndOfCooldown)
         {
             player.health -= AttackDamge;
             EndOfCooldown = Time.time + AttackCooldown;
+            print("Attack Successful");
             return TreeNodes.Status.SUCCESS;
         }
-        
+        print("Attack on cooldown");
+        return TreeNodes.Status.FAILURE;   
     }
 
     protected void Heal(int amount)
@@ -158,14 +177,15 @@ public class Enemy : MonoBehaviour
 
     protected void FloackingSetUp()
     {
-        NavAgent = GetComponent<Nav_Agent>();
+        NavAgent = GetComponentInChildren<Nav_Agent>();
         Health = 100;
         MaxHealth = Health;
-        AttackRange = 5f;
+        AttackRange = 1f;
         AttackCooldown = 10f;
         AttackDamge = 5;
         VisRadius = 50;
         VisAngle = 50;
+        Type = "Flocking";
     }
 
 }

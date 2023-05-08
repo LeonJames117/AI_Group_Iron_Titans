@@ -36,7 +36,7 @@ public class Flocking_Together : Flocking_Behavior
         }
 
         Vector3 Lead_Offset = Leader.transform.position;
-        Debug.Log("Lead offset = " + Lead_Offset);
+        //Debug.Log("Lead offset = " + Lead_Offset);
         //Final_Move = Final_Move - Lead_Offset;
         
         

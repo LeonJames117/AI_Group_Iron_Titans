@@ -68,6 +68,10 @@ public class AStar_Pathfinding : MonoBehaviour
         List<Vector3> simplified_path = new List<Vector3>(); 
 
         //Add first waypoint
+        if(path.Count == 0)
+        {
+            return null;
+        }
         simplified_path.Add(path[0].position);
 
         Vector3 directionA = Vector3.zero;

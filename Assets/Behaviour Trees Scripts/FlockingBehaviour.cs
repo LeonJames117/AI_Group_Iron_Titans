@@ -23,8 +23,8 @@ public class FlockingBehaviour : TreeActions
         //make the root node of the entity behaviour tree.
         mRoot = new TreeRoot();
         //Sequence node setup with a condition leaf for refence.
-        TreeSelector RegroupSelector = new TreeSelector("Regroup Selector");
-        TreeLeaf RegroupCondition = new TreeLeaf("Regroup Condition", f_RegroupCondition);
+        TreeSequence RegroupSelector = new TreeSequence("Regroup Selector");
+        //TreeLeaf RegroupCondition = new TreeLeaf("Regroup Condition", f_RegroupCondition);
         TreeSequence VisionCheck = new TreeSequence("Vision Check");
         TreeLeaf CanSeeEnemies = new TreeLeaf("Can See Enemies", f_CanSeeEnemies);
         TreeSelector AttackSelector = new TreeSelector("Attack Selector");
@@ -36,7 +36,7 @@ public class FlockingBehaviour : TreeActions
         TreeLeaf MoveToTarget = new TreeLeaf("Move To Target", f_MoveToTarget);
 
         //adding leafs to sequence as children including a condition one then adding the sequece to the root.
-        RegroupSelector.AddChild(RegroupCondition);
+        //RegroupSelector.AddChild(RegroupCondition);
         RegroupSelector.AddChild(VisionCheck);
         VisionCheck.AddChild(CanSeeEnemies);
         VisionCheck.AddChild(AttackSelector);
