@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cf4b4a0080d24734c8759a47c7bfd9e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,6 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95b6d166a385ab4eaf725bab540df26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AI: {fileID: 83076484724399740}
+  Index: 3
+  controller: {fileID: 3870541369447565478}
 --- !u!54 &3952446386509134112
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -125,7 +128,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &2310114440836888518
 GameObject:
@@ -298,7 +301,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cf4b4a0080d24734c8759a47c7bfd9e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -345,6 +348,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95b6d166a385ab4eaf725bab540df26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AI: {fileID: 83076484724399740}
+  Index: 2
+  controller: {fileID: 3870541369447565478}
 --- !u!54 &83046597347578131
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -359,7 +365,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &3588895076901452963
 GameObject:
@@ -425,7 +431,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cf4b4a0080d24734c8759a47c7bfd9e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -472,6 +478,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95b6d166a385ab4eaf725bab540df26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AI: {fileID: 83076484724399740}
+  Index: 1
+  controller: {fileID: 3870541369447565478}
 --- !u!54 &5925148091576456004
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -486,7 +495,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &7560181670215483911
 GameObject:
@@ -552,7 +561,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: cf4b4a0080d24734c8759a47c7bfd9e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -599,6 +608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95b6d166a385ab4eaf725bab540df26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AI: {fileID: 83076484724399740}
+  Index: 0
+  controller: {fileID: 3870541369447565478}
 --- !u!54 &5757073050895316601
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -613,7 +625,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &8918884090062146355
 GameObject:
@@ -629,6 +641,7 @@ GameObject:
   - component: {fileID: 5197806182539217011}
   - component: {fileID: 5326203524291577857}
   - component: {fileID: 8622009649126599652}
+  - component: {fileID: 315187645716726641}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -744,3 +757,23 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &315187645716726641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918884090062146355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d668d53c11cf3489a705fba0073115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  body: {fileID: 8918884090062146355}
+  pathSmoothingBoundary: 4
+  destinationRadius: 2
+  blood: {fileID: 0}
+  smoothTurnSpeed: 1
+  audioSource: {fileID: 0}
+  hit_audioClip: {fileID: 0}

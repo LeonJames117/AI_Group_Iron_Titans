@@ -19,6 +19,12 @@ public class BasicRangedBehaviour : TreeActions
         PatrolPoints.Add(PatrolPoint2);
         PatrolPoints.Add(PatrolPoint3);
         CurrentPatrolPoint = PatrolPoints.Count - 1;
+
+        Player = GameObject.FindObjectOfType<PlayerCharacter>();
+        if (Player == null)
+        {
+            Debug.LogError("Null Player");
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -28,7 +34,7 @@ public class BasicRangedBehaviour : TreeActions
         mRoot = new TreeRoot();
         //Sequence node setup with a condition leaf for refence.
         TreeSelector PatrolSelector = new TreeSelector("Patrol Selector");
-        TreeLeaf FleeCondition = new TreeLeaf("Flee Condition", f_FleeCondition);
+        //TreeLeaf FleeCondition = new TreeLeaf("Flee Condition", f_FleeCondition);
         TreeSequence VisionCheck = new TreeSequence("Vision Check");
         TreeLeaf CanSeeEnemies = new TreeLeaf("Can See Enemies", f_CanSeeEnemies);
         TreeSelector AttackSelector = new TreeSelector("Attack Selector");
@@ -43,7 +49,7 @@ public class BasicRangedBehaviour : TreeActions
         TreeLeaf MoveToNextPoint = new TreeLeaf("Move To Next Point", f_MoveToNextPoint);
 
         //adding leafs to sequence as children including a condition one then adding the sequece to the root.
-        PatrolSelector.AddChild(FleeCondition);
+        //PatrolSelector.AddChild(FleeCondition);
         PatrolSelector.AddChild(VisionCheck);
         VisionCheck.AddChild(CanSeeEnemies);
         VisionCheck.AddChild(AttackSelector);

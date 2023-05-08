@@ -19,7 +19,9 @@ public class Flocking_Avoidance: Flocking_Behavior
         {
             if(Vector3.Distance(Neighbour.transform.position,Current_Agent.transform.position) >= Controller.Square_Avoidance_Radius_Access)
             {
-                Avoidance_Adjust += Current_Agent.transform.position - Neighbour.transform.position;
+                Vector3 Current_AgentNoY = new Vector3(Current_Agent.transform.position.x, 0, Current_Agent.transform.position.z);
+                Vector3 NeighbourNoY = new Vector3(Neighbour.transform.position.x, 0, Neighbour.transform.position.z);
+                Avoidance_Adjust += Current_AgentNoY - NeighbourNoY;
                 Avoid_Num++;
             }
             if(Avoid_Num<0)

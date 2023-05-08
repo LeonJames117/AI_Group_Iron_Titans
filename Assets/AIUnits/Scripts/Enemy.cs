@@ -26,9 +26,19 @@ public class Enemy : MonoBehaviour
     public float VisAngle;
 
 
+    
+
+    public AudioSource audioSource;
+    public AudioClip hit_audioClip;
+    public GameObject blood;
+    public Wave wave;
+    public CameraShake cameraShake;
+
     void Start()
     {
-        Target = GameObject.FindGameObjectWithTag("Player");
+        Target = GameObject.FindObjectOfType<PlayerCharacter>().gameObject;
+        cameraShake = FindObjectOfType<CameraShake>();
+        wave = GetComponentInParent<Wave>();
         StartCoroutine(FOV_Run());
     }
 
@@ -112,6 +122,11 @@ public class Enemy : MonoBehaviour
             print("Path is Null");
             return;
         }
+        if(path.Count == 0)
+        {
+            print("Path count 0");
+            return;
+        }
         int Index = path.Count - 1;
         LastPathPointPos = path[Index];
         print("Currently Moving");
@@ -150,11 +165,21 @@ public class Enemy : MonoBehaviour
     public void Damage(int damage)
     {
         Health -= damage;
+        if(Health <= 0)
+        {
+            Transform t = new GameObject().transform;
+            t.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            Instantiate(blood, t.position, Quaternion.identity);
+            cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
+            audioSource.PlayOneShot(hit_audioClip, 0.3f);
+            wave.UnitDeath();
+            Destroy(gameObject);
+        }
     }
 
     protected void RangeSetUp()
     {
-        NavAgent = GetComponent<Nav_Agent>();
+        NavAgent = GetComponentInChildren<Nav_Agent>();
         Health = 150;
         MaxHealth = Health;
         AttackRange = 20f;
@@ -166,8 +191,8 @@ public class Enemy : MonoBehaviour
 
     protected void MeleeSetUp()
     {
-        NavAgent = GetComponent<Nav_Agent>();
-        Health = 250;
+        NavAgent = GetComponentInChildren<Nav_Agent>();
+        Health = 20;
         MaxHealth = Health;
         AttackRange = 5f;
         AttackCooldown = 30f;
@@ -187,6 +212,17 @@ public class Enemy : MonoBehaviour
         VisRadius = 50;
         VisAngle = 50;
         Type = "Flocking";
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print("Overlap");
+        if (other.tag == "AttackBox")
+        {
+            print("Damage Triggered");
+            Damage(20);
+
+        }
     }
 
 }

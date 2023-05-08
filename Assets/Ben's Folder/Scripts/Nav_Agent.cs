@@ -165,20 +165,20 @@ public class Nav_Agent : MonoBehaviour
         followingPath = false;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "AttackBox") 
-        {
-            print("ouch");
-            Transform t = new GameObject().transform;
-            t.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-            Instantiate(blood, t.position, Quaternion.identity);
-            cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
-            audioSource.PlayOneShot(hit_audioClip, 0.3f);
-            wave.UnitDeath();
-            Destroy(gameObject);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //if (other.tag == "AttackBox")
+    //    //{
+    //    //    print("ouch");
+    //    //    Transform t = new GameObject().transform;
+    //    //    t.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+    //    //    Instantiate(blood, t.position, Quaternion.identity);
+    //    //    cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
+    //    //    audioSource.PlayOneShot(hit_audioClip, 0.3f);
+    //    //    wave.UnitDeath();
+    //    //    Destroy(gameObject.);
+    //    //}
+    //}
 
 }
 

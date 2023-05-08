@@ -95,6 +95,14 @@ public class Flocking_Controller : MonoBehaviour
     }
 
 
+    public void CheckDead()
+    {
+        if(All_Agents.Count == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     List<Transform> GetNearbyObjects(Flocking_Agent A)
     {
         List<Transform> Nearby = new List<Transform>();

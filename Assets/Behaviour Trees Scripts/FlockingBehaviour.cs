@@ -12,6 +12,11 @@ public class FlockingBehaviour : TreeActions
     private void Awake()
     {
         AI = GetComponent<FlockingAI>();
+        Player = GameObject.FindObjectOfType<PlayerCharacter>();
+        if (Player == null)
+        {
+            Debug.LogError("Null Player");
+        }
     }
 
     // Start is called before the first frame update

@@ -17,9 +17,10 @@ public class TreeActions : MonoBehaviour
 
     private void Start()
     {
-        //Player = AI.Target.GetComponent<PlayerCharacter>();
         
+
     }
+    
 
     public TreeNodes.Status f_FleeCondition()
     {
