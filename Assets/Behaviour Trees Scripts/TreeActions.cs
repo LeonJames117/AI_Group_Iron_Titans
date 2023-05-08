@@ -73,6 +73,7 @@ public class TreeActions : MonoBehaviour
     //the Actions leafs.
     public TreeNodes.Status f_AttackEnemies()
     {
+        print("Attacking");
         if (AI.Type == "Flocking")
         {
             foreach (Flocking_Agent Agent in Flock.All_Agents)
@@ -88,6 +89,7 @@ public class TreeActions : MonoBehaviour
         {
             return AI.Attack(Player);
         }
+        print("Attack failed");
         return TreeNodes.Status.FAILURE;
     }
 

@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
     {
         Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
         List<Vector3> path = PathfindRequestManager.instance.RequestPath(BodyNoY, endPoint);
-        if (path.Count == 0)
+        if (path == null)
         {
             print("Path is Null");
             return;
@@ -137,7 +137,8 @@ public class Enemy : MonoBehaviour
             print("Attack Successful");
             return TreeNodes.Status.SUCCESS;
         }
-        print("Attack on cooldown");
+        print("Attack on cooldown " + EndOfCooldown);
+        print("Time " + Time.time);
         return TreeNodes.Status.FAILURE;   
     }
 
