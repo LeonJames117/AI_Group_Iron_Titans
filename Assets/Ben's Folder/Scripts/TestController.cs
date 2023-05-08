@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class TestController : MonoBehaviour
 {
-    [SerializeField] AStar_Pathfinding a;
-    [SerializeField] GameObject end;
+    AStar_Pathfinding a;
+    GameObject end;
     Nav_Agent nav_agent;
 
     bool pathed = false;
@@ -15,6 +15,8 @@ public class TestController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        a = FindObjectOfType<AStar_Pathfinding>();
+        end = FindObjectOfType<PlayerController>().gameObject;
         nav_agent = GetComponent<Nav_Agent>();
     }
 

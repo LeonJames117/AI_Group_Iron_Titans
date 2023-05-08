@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
     [SerializeField] public float walkSpeed;
     [SerializeField] public float runSpeed;
@@ -19,6 +19,9 @@ public class Character : MonoBehaviour
     [SerializeField] float attackWindow = 0.5f;
     float attackWindowTimer = 0.0f;
 
+    AudioSource audioSource;
+    [SerializeField] AudioClip ouch_AudioClip;
+    [SerializeField] GameObject blood;
 
     [SerializeField] BoxCollider attackBox;
     public bool attacking = false;
@@ -34,6 +37,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         attackBox.gameObject.SetActive(false);
         //attackBox.enabled = false;
     }
@@ -135,16 +139,16 @@ public class Character : MonoBehaviour
             attacking = true;
             attackBox.gameObject.SetActive(true);
         }
+    }
 
-
-
-        //if(attackTimer >= attackCooldown) 
-        //{
-        //    attackBox.gameObject.SetActive(true);
-        //    //attackBox.enabled = true;
-        //    print("attack");
-        //    attackTimer = 0;
-        //    attackWindowTimer = 0.0f;
-        //}
+    void Damage(int damage) 
+    {
+        health -= damage;
+        audioSource.PlayOneShot(ouch_AudioClip);
+        
+        if(health <= 0) 
+        {
+            Instantiate(blood, transform.position, Quaternion.identity);
+        }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Character character;
+    PlayerCharacter character;
     [SerializeField] Animator body_animator;
     [SerializeField] Animator sword_animator;
     bool hasMoved = false;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        character = GetComponent<Character>();
+        character = GetComponent<PlayerCharacter>();
     }
 
     // Update is called once per frame
@@ -81,12 +81,12 @@ public class PlayerController : MonoBehaviour
         character.SetMoveDirection(dirVector);
         if (dirVector != Vector3.zero)//Set Move State
         {
-            character.SetMoveState(Character.MoveState.WALKING);
+            character.SetMoveState(PlayerCharacter.MoveState.WALKING);
             hasMoved = true;
         }
         else 
         {
-            character.SetMoveState(Character.MoveState.IDLE);
+            character.SetMoveState(PlayerCharacter.MoveState.IDLE);
         }
     }
 

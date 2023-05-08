@@ -8,15 +8,17 @@ public class RoundSystem : MonoBehaviour
     [SerializeField] Canvas roundUI;
     TextMeshProUGUI roundText;
 
-    [SerializeField] EnemyWave[] waves;
+    [SerializeField] Wave[] waves;
     [SerializeField] float waveRestTime;
 
     [Header("Audio")]
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip horn_audioClip;
+    [SerializeField] AudioClip win_audioClip;
 
     int wave = 0;
     bool waveComplete = true;
+    bool gameOver = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,28 +41,47 @@ public class RoundSystem : MonoBehaviour
         }
     }
 
-    void WaveComplete() 
+    public void WaveComplete() 
     {
         waveComplete = true;
+        wave++;
     }
 
     IEnumerator StartRound() 
     {
         waveComplete = false;
-        wave++;
         roundUI.gameObject.SetActive(true);
-        roundText.text = "ROUND " + wave.ToString();
-        //spawn enemies
-        audioSource.PlayOneShot(horn_audioClip, 0.4f);
+
+        SpawnWave();
+
         yield return new WaitForSeconds(2.0f);
 
-        roundUI.gameObject.SetActive(false);
+        if (!gameOver) 
+        {
+            roundUI.gameObject.SetActive(false);
+        }
     }
 
-    [System.Serializable]
-    public class EnemyWave
+    void SpawnWave() 
     {
-        [SerializeField] GameObject[] enemy_types;
-        [SerializeField] float[] enemy_numbers;
+        if(wave > waves.Length - 1) 
+        {
+            GameWin();
+        }
+        else 
+        {
+            print("spawn");
+            Instantiate(waves[wave].gameObject);
+            roundText.text = "ROUND " + (wave + 1).ToString();
+            audioSource.PlayOneShot(horn_audioClip, 0.4f);
+        }
     }
+
+    void GameWin() 
+    {
+        roundText.text = "YOU WIN";
+        audioSource.PlayOneShot(win_audioClip, 0.4f);
+        gameOver = true;
+    }
+
 }

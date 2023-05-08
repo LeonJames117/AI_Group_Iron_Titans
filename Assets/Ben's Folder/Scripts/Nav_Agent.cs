@@ -16,22 +16,25 @@ public class Nav_Agent : MonoBehaviour
     [SerializeField] float pathSmoothingBoundary;
     float distanceToWaypoint;
 
-
-    [SerializeField] Nav_Grid ng;
+    Nav_Grid ng;
 
     [SerializeField] float destinationRadius;
 
     [SerializeField] GameObject blood;
     bool stopMove = false;
 
-    [SerializeField] CameraShake cameraShake;
+    CameraShake cameraShake;
     [SerializeField] float smoothTurnSpeed = 2.0f;
 
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip hit_audioClip;
-
+    Wave wave;
     private void Start()
     {
+        ng = FindObjectOfType<Nav_Grid>();
+        cameraShake = FindObjectOfType<CameraShake>();
+        wave = GetComponentInParent<Wave>();
+
         ChangeDirection(transform.forward);
     }
 
@@ -172,6 +175,7 @@ public class Nav_Agent : MonoBehaviour
             Instantiate(blood, t.position, Quaternion.identity);
             cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
             audioSource.PlayOneShot(hit_audioClip, 0.3f);
+            wave.UnitDeath();
             Destroy(gameObject);
         }
     }
