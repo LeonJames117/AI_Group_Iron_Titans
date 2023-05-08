@@ -9,8 +9,9 @@ public class Enemy : MonoBehaviour
     public int Health = 100;
     public int MaxHealth;
     public float AttackRange;
-    public float AttackCooldown;
+    public float AttackCooldown = 5f;
     public int AttackDamge;
+    float EndOfCooldown;
     protected Nav_Agent NavAgent;
     Vector3 LastPathPointPos;
     protected TreeActions BehaviourTree;
@@ -112,8 +113,13 @@ public class Enemy : MonoBehaviour
 
     public TreeNodes.Status Attack(Character player)
     {
-        player.health -= AttackDamge;
-        return TreeNodes.Status.SUCCESS;
+        if (Time.time >= EndOfCooldown)
+        {
+            player.health -= AttackDamge;
+            EndOfCooldown = Time.time + AttackCooldown;
+            return TreeNodes.Status.SUCCESS;
+        }
+        
     }
 
     protected void Heal(int amount)
