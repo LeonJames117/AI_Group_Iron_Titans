@@ -26,6 +26,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] BoxCollider attackBox;
     public bool attacking = false;
 
+    [SerializeField] Canvas deathCanvas;
+
     public enum MoveState
     {
         IDLE,
@@ -149,6 +151,7 @@ public class PlayerCharacter : MonoBehaviour
         if(health <= 0) 
         {
             Instantiate(blood, transform.position, Quaternion.identity);
+            deathCanvas.gameObject.SetActive(true);
         }
     }
 }
