@@ -164,7 +164,7 @@ public class TreeActions : MonoBehaviour
             AI.StopMovement();
             return TreeNodes.Status.SUCCESS;
         }
-        else if (DistanceToTarget < 2)
+        else if (DistanceToTarget < 4)
         {
             mState = ActionState.IDLE;
             return TreeNodes.Status.SUCCESS;

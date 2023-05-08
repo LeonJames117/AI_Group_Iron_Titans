@@ -167,9 +167,7 @@ public class Enemy : MonoBehaviour
         Health -= damage;
         if(Health <= 0)
         {
-            Transform t = new GameObject().transform;
-            t.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-            Instantiate(blood, t.position, Quaternion.identity);
+            Instantiate(blood, Body.transform.position, Quaternion.identity);
             cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
             audioSource.PlayOneShot(hit_audioClip, 0.3f);
             wave.UnitDeath();
@@ -214,15 +212,6 @@ public class Enemy : MonoBehaviour
         Type = "Flocking";
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        print("Overlap");
-        if (other.tag == "AttackBox")
-        {
-            print("Damage Triggered");
-            Damage(20);
-
-        }
-    }
+    
 
 }
