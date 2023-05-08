@@ -18,6 +18,6 @@ public class Flocking_Leader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NavA.StartFollowPath(Pathing.Pathfind(transform.position, controller.transform.position));
+        // NavA.StartFollowPath(Pathing.Pathfind(transform.position, controller.transform.position));
     }
 }
