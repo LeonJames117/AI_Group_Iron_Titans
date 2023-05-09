@@ -8,18 +8,29 @@ public class Wave : MonoBehaviour
     int units;
     int units_alive;
     bool defeated = false;
+    [SerializeField] GameObject[] unit_arr;
+
 
     // Start is called before the first frame update
     void Start()
     {
         roundSystem = FindObjectOfType<RoundSystem>();
-        units = transform.childCount;
+        units = unit_arr.Length;
+
         units_alive = units;
+    }
+
+    private void Update()
+    {
+
+
+        print("child count: " + units_alive);
     }
 
     public void UnitDeath() 
     {
         units_alive--;
+
 
         if(units_alive == 0) 
         {

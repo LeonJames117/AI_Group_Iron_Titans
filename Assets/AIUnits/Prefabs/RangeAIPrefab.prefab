@@ -52,13 +52,12 @@ MonoBehaviour:
   speed: 5
   body: {fileID: 8918884090062146355}
   pathSmoothingBoundary: 4
-  ng: {fileID: 0}
   destinationRadius: 2
   blood: {fileID: 0}
-  cameraShake: {fileID: 0}
   smoothTurnSpeed: 1
   audioSource: {fileID: 0}
   hit_audioClip: {fileID: 0}
+  canDie: 0
 --- !u!114 &7211698883054544349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +75,7 @@ MonoBehaviour:
   AttackRange: 0
   AttackCooldown: 0
   AttackDamge: 0
+  Type: 
   Target: {fileID: 0}
   Body: {fileID: 8918884090062146355}
   TargetLayer:
@@ -87,6 +87,11 @@ MonoBehaviour:
   PlayerInSight: 0
   VisRadius: 10
   VisAngle: 0
+  audioSource: {fileID: 0}
+  hit_audioClip: {fileID: 0}
+  blood: {fileID: 0}
+  wave: {fileID: 0}
+  cameraShake: {fileID: 0}
 --- !u!114 &967699178982217291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  Flock: {fileID: 0}
   PatrolPoint1: {fileID: 0}
   PatrolPoint2: {fileID: 0}
   PatrolPoint3: {fileID: 0}
@@ -161,7 +167,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8668915807485168931}
   m_Father: {fileID: 1034070440990186004}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -180,7 +187,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8918884090062146355}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -215,3 +222,65 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &8902344041652262069
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7612888601632123336}
+    m_Modifications:
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2651104163099739784, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+      propertyPath: m_Name
+      value: ArcherModel
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+--- !u!4 &8668915807485168931 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 271718194028452246, guid: 112b81ea6ebad5c428c9e954397ec39c, type: 3}
+  m_PrefabInstance: {fileID: 8902344041652262069}
+  m_PrefabAsset: {fileID: 0}
