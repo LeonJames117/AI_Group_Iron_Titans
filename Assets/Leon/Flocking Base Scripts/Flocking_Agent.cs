@@ -10,11 +10,14 @@ public class Flocking_Agent : MonoBehaviour
     int Health = 20;
     public Flocking_Controller controller;
     public Collider Agent_Collider_Access { get { return Agent_Collider; } }
+    float Starting_Y = 0;
+    float Starting_Z = 0;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Agent_Collider = GetComponent<Collider>();
-
+        Starting_Y = Agent_Collider.transform.position.y;
+        Starting_Z = Agent_Collider.transform.position.z;
     }
 
     public void Damage(int Dam)
@@ -55,12 +58,15 @@ public class Flocking_Agent : MonoBehaviour
     {
         //Face new destination
         transform.forward = Destination;
+        
         //Movement
         float NewX = transform.position.x;
         float NewZ = transform.position.z;
         NewX+= Destination.x * Time.deltaTime;
         NewZ += Destination.z * Time.deltaTime;
-        transform.position = new Vector3(NewX,0.86f, NewZ);
+        transform.forward = new Vector3(Destination.x, 0, Destination.z);
+
+        transform.position = new Vector3(NewX,Starting_Y, NewZ);
     }
 
     public bool Range_Check(Vector3 Target, float Range)
