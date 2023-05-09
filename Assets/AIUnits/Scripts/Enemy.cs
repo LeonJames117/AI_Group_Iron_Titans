@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public float AttackRange;
     public float AttackCooldown = 5f;
     public int AttackDamge;
+    public bool LookArround = true;
     float EndOfCooldown;
     protected Nav_Agent NavAgent;
     Vector3 LastPathPointPos;
@@ -67,9 +68,13 @@ public class Enemy : MonoBehaviour
             Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
             Vector3 Target_Direction = (TargetNoY - BodyNoY).normalized;
             
-            Quaternion Look_At = Quaternion.LookRotation(TargetNoY - BodyNoY);
+            if(LookArround)
+            {
+                Quaternion Look_At = Quaternion.LookRotation(TargetNoY - BodyNoY);
+
+                Body.transform.rotation = Quaternion.Slerp(Body.transform.rotation, Look_At, 50 * Time.deltaTime);
+            }
             
-            Body.transform.rotation = Quaternion.Slerp(Body.transform.rotation, Look_At, 50 * Time.deltaTime);
             
             if (Vector3.Angle(Body.transform.forward, Target_Direction) < VisAngle / 2)
             {

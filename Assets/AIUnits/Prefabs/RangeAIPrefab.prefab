@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1034070440990186004}
-  - component: {fileID: 8151334166104469863}
   - component: {fileID: 7211698883054544349}
   - component: {fileID: 967699178982217291}
   - component: {fileID: 7471260840847570323}
@@ -37,27 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8151334166104469863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2310114440836888518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7d668d53c11cf3489a705fba0073115, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  body: {fileID: 8918884090062146355}
-  pathSmoothingBoundary: 4
-  destinationRadius: 2
-  blood: {fileID: 0}
-  smoothTurnSpeed: 1
-  audioSource: {fileID: 0}
-  hit_audioClip: {fileID: 0}
-  canDie: 0
 --- !u!114 &7211698883054544349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +127,8 @@ GameObject:
   - component: {fileID: 7612888601632123336}
   - component: {fileID: 9160421159225241413}
   - component: {fileID: 9161107392479110237}
+  - component: {fileID: 3879168979423763105}
+  - component: {fileID: 1815489473748447767}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -222,6 +202,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3879168979423763105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918884090062146355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d668d53c11cf3489a705fba0073115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  body: {fileID: 8918884090062146355}
+  pathSmoothingBoundary: 4
+  destinationRadius: 2
+  blood: {fileID: 0}
+  smoothTurnSpeed: 1
+  audioSource: {fileID: 0}
+  hit_audioClip: {fileID: 0}
+  canDie: 0
+--- !u!114 &1815489473748447767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918884090062146355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1082bbe444fa14eba12ef3cecbee35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AI: {fileID: 7211698883054544349}
 --- !u!1001 &8902344041652262069
 PrefabInstance:
   m_ObjectHideFlags: 0

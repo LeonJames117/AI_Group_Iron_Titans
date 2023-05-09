@@ -13,6 +13,8 @@ public class TreeActions : MonoBehaviour
     protected List<GameObject> PatrolPoints = new List<GameObject>();
     protected int CurrentPatrolPoint;
     public Flocking_Controller Flock;
+    public float WaitAtPoint = 5f;
+    float MoveToNextPoint;
     //Condition leaf.
 
     private void Start()
@@ -113,13 +115,22 @@ public class TreeActions : MonoBehaviour
     //the Actions leafs.
     public TreeNodes.Status f_FindNextPoint()
     {
-        if(CurrentPatrolPoint == PatrolPoints.Count - 1)
+        if (Time.time < MoveToNextPoint)
+        {
+            AI.LookArround = true;
+            return TreeNodes.Status.FAILURE;
+        }
+        if (CurrentPatrolPoint == PatrolPoints.Count - 1)
         {
             CurrentPatrolPoint = 0;
+            MoveToNextPoint = Time.time + WaitAtPoint;
+            AI.LookArround = false;
         }
         else
         {
             CurrentPatrolPoint++;
+            MoveToNextPoint = Time.time + WaitAtPoint;
+            AI.LookArround = false;
         }
         return TreeNodes.Status.SUCCESS;
     }
