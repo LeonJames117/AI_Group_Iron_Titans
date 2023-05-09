@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b50868c3833402d42940902816b8873d, type: 3}
-  m_Name: Together_Test
+  m_Name: Bird_Flocking
   m_EditorClassIdentifier: 
   Behaviors:
   - {fileID: 11400000, guid: d240d75907c3768408fac6f46796570e, type: 2}
   - {fileID: 11400000, guid: 9cc2ce8abe499a94aa8e177da3b102f6, type: 2}
   - {fileID: 11400000, guid: 8da4e531582d6574db467300586aa141, type: 2}
-  - {fileID: 11400000, guid: 6a18bbffebac2a44883a304ecc8676e7, type: 2}
+  - {fileID: 11400000, guid: 3ca1117a967a2f14bbc727690517f70c, type: 2}
   Weights:
-  - 4
+  - 2
   - 5
-  - 4
-  - 8
+  - 3
+  - 1
