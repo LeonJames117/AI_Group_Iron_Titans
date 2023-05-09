@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1576249802}
-  m_IndirectSpecularColor: {r: 0.4445624, g: 0.49406695, b: 0.5733446, a: 1}
+  m_IndirectSpecularColor: {r: 0.44456148, g: 0.49406564, b: 0.5733425, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21846,10 +21846,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 6169251644805191380, guid: 4b0db91a51e97f249a44402ec284d750, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6169251644805191390, guid: 4b0db91a51e97f249a44402ec284d750, type: 3}
       propertyPath: blood
       value: 
       objectReference: {fileID: 2364790125746226309, guid: 9b9647b0bd233bf478a2703d083948a8, type: 3}
+    - target: {fileID: 6169251644805191390, guid: 4b0db91a51e97f249a44402ec284d750, type: 3}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6169251644805191390, guid: 4b0db91a51e97f249a44402ec284d750, type: 3}
       propertyPath: attackCooldown
       value: 0.1

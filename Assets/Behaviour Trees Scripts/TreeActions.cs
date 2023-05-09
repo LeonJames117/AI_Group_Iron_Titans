@@ -103,7 +103,11 @@ public class TreeActions : MonoBehaviour
 
     public TreeNodes.Status f_MoveToTarget()
     {
-        return Movement(Player.transform.position);
+        if(AI.PlayerInSight)
+        {
+            return Movement(Player.transform.position);
+        }
+        return TreeNodes.Status.FAILURE;
     }
 
     //the Actions leafs.
@@ -144,7 +148,7 @@ public class TreeActions : MonoBehaviour
         else if (DistanceToTarget < AI.AttackRange)
         {
             mState = ActionState.IDLE;
-            AI.StopMovement();
+            AI.StopMovement();;
             return TreeNodes.Status.SUCCESS;
         }
         return TreeNodes.Status.RUNNING;
@@ -152,7 +156,7 @@ public class TreeActions : MonoBehaviour
 
     TreeNodes.Status PatrolMovement(Vector3 destination)
     {
-        float DistanceToTarget = Vector3.Distance(destination, this.transform.position);
+        float DistanceToTarget = Vector3.Distance(destination, AI.Body.transform.position);
         AI.Movement(destination);
         if (mState == ActionState.IDLE)
         {

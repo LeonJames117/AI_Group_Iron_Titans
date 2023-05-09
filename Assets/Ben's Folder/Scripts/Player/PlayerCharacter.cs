@@ -143,7 +143,7 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
-    void Damage(int damage) 
+    public void Damage(int damage) 
     {
         health -= damage;
         audioSource.PlayOneShot(ouch_AudioClip);
