@@ -27,14 +27,15 @@ public class Enemy : MonoBehaviour
     public float VisAngle;
 
 
-    
+    public Animator Attack_Anim;
 
     public AudioSource audioSource;
     public AudioClip hit_audioClip;
     public GameObject blood;
     public Wave wave;
     public CameraShake cameraShake;
-
+    public GameObject Arrow;
+    public Transform Fire_Point;
     void Start()
     {
         Target = GameObject.FindObjectOfType<PlayerCharacter>().gameObject;
@@ -81,9 +82,10 @@ public class Enemy : MonoBehaviour
                 RaycastHit hit;
                 print("Passed if 1");
                 float Distance_to_Target = Vector3.Distance(transform.position, Target_Pos);
-                if (!Physics.Raycast(transform.position, Target_Direction, out hit, Distance_to_Target, Obstructions))
+                if (true)
                 {
-                    print("Passed if 2");
+                    print("Passed if 2 " + this.name);
+                    LookArround = true;
                     PlayerInSight = true;
                          
                 }
@@ -91,6 +93,7 @@ public class Enemy : MonoBehaviour
                 {
                     print("Failed if 2");
                     PlayerInSight = false;
+
                 }
             }
             else
@@ -153,11 +156,25 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time >= EndOfCooldown)
         {
-            player.Damage(AttackDamge);
+            
+            if(Type != "Flocking")
+            {
+                print("Playing Animation");
+                Attack_Anim.SetBool("IsAttacking", true);
+            }
+            if (Type == "Range")
+            {
+                var temp = Instantiate(Arrow, Fire_Point.position, Fire_Point.rotation);
+                temp.GetComponent<Projectile>().Damage = AttackDamge;
+                EndOfCooldown = Time.time + AttackCooldown;
+                return TreeNodes.Status.SUCCESS;
+            }
             EndOfCooldown = Time.time + AttackCooldown;
             print("Attack Successful");
+            player.Damage(AttackDamge);
             return TreeNodes.Status.SUCCESS;
         }
+        
         print("Attack on cooldown " + EndOfCooldown);
         print("Time " + Time.time);
         return TreeNodes.Status.FAILURE;   
@@ -171,11 +188,11 @@ public class Enemy : MonoBehaviour
     public void Damage(int damage)
     {
         Health -= damage;
-        if(Health <= 0)
+        audioSource.PlayOneShot(hit_audioClip, 0.3f);
+        cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
+        if (Health <= 0)
         {
             Instantiate(blood, Body.transform.position, Quaternion.identity);
-            cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
-            audioSource.PlayOneShot(hit_audioClip, 0.3f);
             wave.UnitDeath();
             Destroy(gameObject);
         }
@@ -184,37 +201,21 @@ public class Enemy : MonoBehaviour
     protected void RangeSetUp()
     {
         NavAgent = GetComponentInChildren<Nav_Agent>();
-        Health = 150;
         MaxHealth = Health;
-        AttackRange = 20f;
-        AttackCooldown = 20f;
-        AttackDamge = 15;
-        VisRadius = 60;
-        VisAngle = 90;
+        Type = "Range";
     }
 
     protected void MeleeSetUp()
     {
         NavAgent = GetComponentInChildren<Nav_Agent>();
-        Health = 20;
         MaxHealth = Health;
-        AttackRange = 5f;
-        AttackCooldown = 30f;
-        AttackDamge = 20;
-        VisRadius = 45;
-        VisAngle = 60;
+        Type = "Melee";
     }
 
     protected void FloackingSetUp()
     {
         NavAgent = GetComponentInChildren<Nav_Agent>();
-        Health = 100;
         MaxHealth = Health;
-        AttackRange = 1f;
-        AttackCooldown = 10f;
-        AttackDamge = 5;
-        VisRadius = 50;
-        VisAngle = 50;
         Type = "Flocking";
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeleeAI : Enemy
 {
-
+    
     private void Awake()
     {
         MeleeSetUp();

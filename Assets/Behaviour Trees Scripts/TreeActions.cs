@@ -115,7 +115,7 @@ public class TreeActions : MonoBehaviour
     //the Actions leafs.
     public TreeNodes.Status f_FindNextPoint()
     {
-        if (Time.time < MoveToNextPoint)
+        if (Time.time < MoveToNextPoint && !AI.PlayerInSight)
         {
             AI.LookArround = true;
             return TreeNodes.Status.FAILURE;
@@ -159,6 +159,7 @@ public class TreeActions : MonoBehaviour
         else if (DistanceToTarget < AI.AttackRange)
         {
             mState = ActionState.IDLE;
+            AI.LookArround=true;
             AI.StopMovement();;
             return TreeNodes.Status.SUCCESS;
         }
@@ -176,11 +177,13 @@ public class TreeActions : MonoBehaviour
         else if(AI.PlayerInSight)
         {
             mState = ActionState.IDLE;
+            AI.LookArround = true;
             AI.StopMovement();
             return TreeNodes.Status.SUCCESS;
         }
         else if (DistanceToTarget < 4)
         {
+            AI.LookArround = true;
             mState = ActionState.IDLE;
             return TreeNodes.Status.SUCCESS;
         }

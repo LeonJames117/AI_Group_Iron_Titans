@@ -46,11 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d324d4a8cb5df8844b2866f73559d9e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
-  MaxHealth: 0
-  AttackRange: 0
-  AttackCooldown: 0
+  Health: 0
+  MaxHealth: 40
+  AttackRange: 2
+  AttackCooldown: 2
   AttackDamge: 0
+  LookArround: 1
   Type: 
   Target: {fileID: 0}
   Body: {fileID: 8918884090062146355}
@@ -62,7 +63,8 @@ MonoBehaviour:
     m_Bits: 64
   PlayerInSight: 0
   VisRadius: 10
-  VisAngle: 0
+  VisAngle: 360
+  Attack_Anim: {fileID: 6983178782691627161}
   audioSource: {fileID: 0}
   hit_audioClip: {fileID: 8300000, guid: 0c6253629ac29c240a86454c2772bd9f, type: 3}
   blood: {fileID: 2364790125746226309, guid: 9b9647b0bd233bf478a2703d083948a8, type: 3}
@@ -82,6 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   Flock: {fileID: 0}
+  WaitAtPoint: 5
   PatrolPoint1: {fileID: 0}
   PatrolPoint2: {fileID: 0}
   PatrolPoint3: {fileID: 0}
@@ -244,6 +247,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7612888601632123336}
     m_Modifications:
+    - target: {fileID: 5527893566346493637, guid: 93c6aa9cb0f77a744afb5fc3b7401989, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527893566756691761, guid: 93c6aa9cb0f77a744afb5fc3b7401989, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5527893567026118504, guid: 93c6aa9cb0f77a744afb5fc3b7401989, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5527893567196607016, guid: 93c6aa9cb0f77a744afb5fc3b7401989, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -299,6 +314,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5527893567196607016, guid: 93c6aa9cb0f77a744afb5fc3b7401989, type: 3}
   m_PrefabInstance: {fileID: 1317063993567819622}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6841006660882433359 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5527893567196607017, guid: 93c6aa9cb0f77a744afb5fc3b7401989, type: 3}
+  m_PrefabInstance: {fileID: 1317063993567819622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6983178782691627161
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841006660882433359}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa68c25c0e18c9945b8219fdb62e635a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7113617821764817814
 PrefabInstance:
   m_ObjectHideFlags: 0

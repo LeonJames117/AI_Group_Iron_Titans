@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] float speed;
     bool fired = true;
-
+    public int Damage;
     public void Fire(Quaternion rotation) 
     {
         fired = true;
@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     {
         if(other.tag == "Player") 
         {
-            //damagePlayer;
+            other.GetComponent<PlayerCharacter>().Damage(Damage);
 
         }
         print("collide");

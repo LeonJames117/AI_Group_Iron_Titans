@@ -181,11 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58acbeeaa30ecc443acd6182161b5330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  Health: 0
   MaxHealth: 0
-  AttackRange: 0
-  AttackCooldown: 0
+  AttackRange: 2
+  AttackCooldown: 2
   AttackDamge: 0
+  LookArround: 1
   Type: 
   Target: {fileID: 0}
   Body: {fileID: 8918884090062146355}
@@ -196,8 +197,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   PlayerInSight: 0
-  VisRadius: 10
-  VisAngle: 0
+  VisRadius: 50
+  VisAngle: 360
+  Attack_Anim: {fileID: 0}
   audioSource: {fileID: 0}
   hit_audioClip: {fileID: 8300000, guid: 0c6253629ac29c240a86454c2772bd9f, type: 3}
   blood: {fileID: 2364790125746226309, guid: 9b9647b0bd233bf478a2703d083948a8, type: 3}
@@ -217,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   Flock: {fileID: 3870541369447565478}
+  WaitAtPoint: 5
 --- !u!114 &3870541369447565478
 MonoBehaviour:
   m_ObjectHideFlags: 0

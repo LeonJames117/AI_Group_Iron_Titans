@@ -27,7 +27,7 @@ public class PlayerCharacter : MonoBehaviour
     public bool attacking = false;
 
     [SerializeField] Canvas deathCanvas;
-
+    CameraShake cameraShake;
     public enum MoveState
     {
         IDLE,
@@ -40,6 +40,7 @@ public class PlayerCharacter : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        cameraShake = FindObjectOfType<CameraShake>();
         attackBox.gameObject.SetActive(false);
         //attackBox.enabled = false;
     }
@@ -147,11 +148,12 @@ public class PlayerCharacter : MonoBehaviour
     {
         health -= damage;
         audioSource.PlayOneShot(ouch_AudioClip);
-        
-        if(health <= 0) 
+        cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
+        if (health <= 0) 
         {
             Instantiate(blood, transform.position, Quaternion.identity);
             deathCanvas.gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 }
