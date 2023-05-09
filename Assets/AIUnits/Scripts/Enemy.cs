@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
                 if (true)
                 {
                     print("Passed if 2 " + this.name);
-                    LookArround = true;
+                    LookArround = false;
                     PlayerInSight = true;
                          
                 }
@@ -99,12 +99,14 @@ public class Enemy : MonoBehaviour
             else
             {
                 print("Failed if 1");
+                LookArround = true;
                 PlayerInSight = false;
             }
 
         }
         else if (PlayerInSight)
         {
+            LookArround = true;
             PlayerInSight = false;
         }
         else
