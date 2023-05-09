@@ -1079,7 +1079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1696800115
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1127,8 +1127,11 @@ MonoBehaviour:
   characterBody: {fileID: 1611383453}
   attackCooldown: 0.5
   attackWindow: 0.5
+  ouch_AudioClip: {fileID: 0}
+  blood: {fileID: 0}
   attackBox: {fileID: 1611383454}
   attacking: 0
+  deathCanvas: {fileID: 0}
 --- !u!1 &1748451299
 GameObject:
   m_ObjectHideFlags: 0

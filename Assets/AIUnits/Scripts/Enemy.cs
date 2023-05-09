@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
 
     private void FOV_Check()
     {
-        Collider[] Vision = Physics.OverlapSphere(transform.position, VisRadius, TargetLayer);
+        Collider[] Vision = Physics.OverlapSphere(Body.transform.position, VisRadius, TargetLayer);
         if (Vision.Length != 0)
         {
             print("PlayerInSight");
@@ -73,9 +73,10 @@ public class Enemy : MonoBehaviour
             
             if (Vector3.Angle(Body.transform.forward, Target_Direction) < VisAngle / 2)
             {
+                RaycastHit hit;
                 print("Passed if 1");
                 float Distance_to_Target = Vector3.Distance(transform.position, Target_Pos);
-                if (!Physics.Raycast(transform.position, Target_Direction, Distance_to_Target, Obstructions))
+                if (!Physics.Raycast(transform.position, Target_Direction, out hit, Distance_to_Target, Obstructions))
                 {
                     print("Passed if 2");
                     PlayerInSight = true;
@@ -147,7 +148,7 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time >= EndOfCooldown)
         {
-            player.health -= AttackDamge;
+            player.Damage(AttackDamge);
             EndOfCooldown = Time.time + AttackCooldown;
             print("Attack Successful");
             return TreeNodes.Status.SUCCESS;
