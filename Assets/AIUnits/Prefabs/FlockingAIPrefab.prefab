@@ -190,6 +190,7 @@ MonoBehaviour:
   Type: 
   Target: {fileID: 0}
   Body: {fileID: 8918884090062146355}
+  bodyPos: {x: 0, y: 0, z: 0}
   TargetLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -197,7 +198,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   PlayerInSight: 0
-  VisRadius: 50
+  VisRadius: 10
   VisAngle: 360
   Attack_Anim: {fileID: 0}
   audioSource: {fileID: 0}
@@ -205,6 +206,8 @@ MonoBehaviour:
   blood: {fileID: 2364790125746226309, guid: 9b9647b0bd233bf478a2703d083948a8, type: 3}
   wave: {fileID: 0}
   cameraShake: {fileID: 0}
+  Arrow: {fileID: 0}
+  Fire_Point: {fileID: 0}
 --- !u!114 &4082701049769112096
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -55,6 +55,7 @@ MonoBehaviour:
   Type: 
   Target: {fileID: 0}
   Body: {fileID: 8918884090062146355}
+  bodyPos: {x: 0, y: 0, z: 0}
   TargetLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -62,7 +63,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   PlayerInSight: 0
-  VisRadius: 60
+  VisRadius: 20
   VisAngle: 360
   Attack_Anim: {fileID: 4510132809450998378}
   audioSource: {fileID: 0}

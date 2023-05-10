@@ -144,9 +144,7 @@ public class TreeActions : MonoBehaviour
     TreeNodes.Status Movement(Vector3 destination)
     {
         float DistanceToTarget = Vector3.Distance(destination, AI.Body.transform.position);
-
-        Debug.Log("TEST body: " + AI.Body.transform.position);
-        print("TEST dist: " + DistanceToTarget);
+        AI.SetUpMovement(destination);
         //if (mState == ActionState.IDLE)
         //{
         //    mState = ActionState.WORKING;
@@ -161,19 +159,18 @@ public class TreeActions : MonoBehaviour
         else if (DistanceToTarget < AI.AttackRange)
         {
             mState = ActionState.IDLE;
-            //AI.LookArround = true;
             AI.StopMovement();
             return TreeNodes.Status.SUCCESS;
         }
 
-        AI.Movement(destination);
+        AI.Movement();
         return TreeNodes.Status.RUNNING;
     }
 
     TreeNodes.Status PatrolMovement(Vector3 destination)
     {
         float DistanceToTarget = Vector3.Distance(destination, AI.Body.transform.position);
-
+        AI.SetUpMovement(destination);
         //if (mState == ActionState.IDLE)
         //{
         //    mState = ActionState.WORKING;
@@ -193,7 +190,7 @@ public class TreeActions : MonoBehaviour
             return TreeNodes.Status.SUCCESS;
         }
 
-        AI.Movement(destination);
+        AI.Movement();
         return TreeNodes.Status.RUNNING;
     }
 

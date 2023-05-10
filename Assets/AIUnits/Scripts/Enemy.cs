@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor.UIElements;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -26,7 +27,7 @@ public class Enemy : MonoBehaviour
     public float VisRadius = 10f;
     [Range(0, 360)]
     public float VisAngle;
-
+    List<Vector3> Path = new List<Vector3>();
 
     public Animator Attack_Anim;
 
@@ -70,7 +71,7 @@ public class Enemy : MonoBehaviour
         Collider[] Vision = Physics.OverlapSphere(Body.transform.position, VisRadius, TargetLayer);
         if (Vision.Length != 0)
         {
-            print("PlayerInSight");
+            
             Vector3 Target_Pos = Vision[0].transform.position;
             Vector3 TargetNoY = new Vector3(Target_Pos.x, 0, Target_Pos.z);
             Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
@@ -105,7 +106,7 @@ public class Enemy : MonoBehaviour
                     print("Passed if 2 " + this.name);
   
                     PlayerInSight = true;
-                         
+                    print("PlayerInSight " + PlayerInSight);
                 }
                 else
                 {
@@ -140,27 +141,29 @@ public class Enemy : MonoBehaviour
         NavAgent.CompletePath();
     }
 
-
-
-    public void Movement(Vector3 endPoint) 
+    public void SetUpMovement(Vector3 endPoint)
     {
-        isStopped = false;
         Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
-        List<Vector3> path = PathfindRequestManager.instance.RequestPath(BodyNoY, endPoint);
-        if (path == null)
+         Path = PathfindRequestManager.instance.RequestPath(BodyNoY, endPoint);
+        if (Path == null)
         {
             print("Path is Null");
             return;
         }
-        if(path.Count == 0)
+        if (Path.Count == 0)
         {
             print("Path count 0");
             return;
         }
-        int Index = path.Count - 1;
-        LastPathPointPos = path[Index];
+        int Index = Path.Count - 1;
+        LastPathPointPos = Path[Index];
+    }
+
+    public void Movement() 
+    {
+        isStopped = false;
         print("Currently Moving");
-        NavAgent.StartFollowPath(path);
+        NavAgent.StartFollowPath(Path);
     }
 
     public Vector3 GetLastPointPos()
