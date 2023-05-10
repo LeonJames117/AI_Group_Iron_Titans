@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class RoundSystem : MonoBehaviour
 {
     [SerializeField] Vector3 spawnPoint;
@@ -16,14 +17,19 @@ public class RoundSystem : MonoBehaviour
     [SerializeField] AudioClip horn_audioClip;
     [SerializeField] AudioClip win_audioClip;
 
+    PlayerCharacter player;
+
     int wave = 0;
     bool waveComplete = true;
-    bool gameOver = false;
+    public bool gameOver = false;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         roundText = roundUI.GetComponentInChildren<TextMeshProUGUI>();
+        player = FindObjectOfType<PlayerCharacter>();
     }
 
     // Update is called once per frame
@@ -39,6 +45,14 @@ public class RoundSystem : MonoBehaviour
                 waveRestTime = 0;
             }
         }
+
+        if (gameOver) 
+        {
+            if (Input.GetMouseButtonDown(0)) 
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
     }
 
     public void WaveComplete() 
@@ -51,6 +65,7 @@ public class RoundSystem : MonoBehaviour
     {
         waveComplete = false;
         roundUI.gameObject.SetActive(true);
+        player.ResetHealth();
 
         SpawnWave();
 
@@ -82,6 +97,8 @@ public class RoundSystem : MonoBehaviour
         roundText.text = "YOU WIN";
         audioSource.PlayOneShot(win_audioClip, 0.4f);
         gameOver = true;
+
+
     }
 
 }

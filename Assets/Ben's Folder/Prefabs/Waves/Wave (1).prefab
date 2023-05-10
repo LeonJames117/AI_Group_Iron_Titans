@@ -286,7 +286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.55
+      value: 3.94
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -324,6 +324,10 @@ PrefabInstance:
       propertyPath: wave
       value: 
       objectReference: {fileID: 4474026796384136185}
+    - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
+      propertyPath: VisRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: audioSource
       value: 
@@ -373,7 +377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.10773468
+      value: 11.01
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -411,6 +415,10 @@ PrefabInstance:
       propertyPath: wave
       value: 
       objectReference: {fileID: 4474026796384136185}
+    - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
+      propertyPath: VisRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: audioSource
       value: 
@@ -460,7 +468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.41
+      value: 11.312265
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -498,6 +506,10 @@ PrefabInstance:
       propertyPath: wave
       value: 
       objectReference: {fileID: 4474026796384136185}
+    - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
+      propertyPath: VisRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: audioSource
       value: 
@@ -547,7 +559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.55
+      value: 11.62
       objectReference: {fileID: 0}
     - target: {fileID: 1034070440990186004, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -589,6 +601,10 @@ PrefabInstance:
       propertyPath: blood
       value: 
       objectReference: {fileID: 2364790125746226309, guid: 9b9647b0bd233bf478a2703d083948a8, type: 3}
+    - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
+      propertyPath: VisRadius
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7211698883054544349, guid: 45e726427fe64f84a8365a7c383ecfbd, type: 3}
       propertyPath: audioSource
       value: 

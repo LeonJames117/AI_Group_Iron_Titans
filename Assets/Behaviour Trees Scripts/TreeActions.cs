@@ -117,7 +117,7 @@ public class TreeActions : MonoBehaviour
     {
         if (Time.time < MoveToNextPoint)
         {
-            AI.LookArround = true;
+            //AI.LookArround = true;
             return TreeNodes.Status.FAILURE;
         }
         if (CurrentPatrolPoint == PatrolPoints.Count - 1)
@@ -144,11 +144,14 @@ public class TreeActions : MonoBehaviour
     TreeNodes.Status Movement(Vector3 destination)
     {
         float DistanceToTarget = Vector3.Distance(destination, AI.Body.transform.position);
-        if (mState == ActionState.IDLE)
-        {
-            mState = ActionState.WORKING;
-        }
-        else if (Vector3.Distance(AI.GetLastPointPos(), destination) >= AI.AttackRange)
+
+        Debug.Log("TEST body: " + AI.Body.transform.position);
+        print("TEST dist: " + DistanceToTarget);
+        //if (mState == ActionState.IDLE)
+        //{
+        //    mState = ActionState.WORKING;
+        //}
+        if (Vector3.Distance(AI.GetLastPointPos(), destination) >= AI.AttackRange)
         {
             print("Cannot reach target");
             mState = ActionState.IDLE;
@@ -158,10 +161,11 @@ public class TreeActions : MonoBehaviour
         else if (DistanceToTarget < AI.AttackRange)
         {
             mState = ActionState.IDLE;
-            AI.LookArround = false;
+            //AI.LookArround = true;
             AI.StopMovement();
             return TreeNodes.Status.SUCCESS;
         }
+
         AI.Movement(destination);
         return TreeNodes.Status.RUNNING;
     }
@@ -169,12 +173,12 @@ public class TreeActions : MonoBehaviour
     TreeNodes.Status PatrolMovement(Vector3 destination)
     {
         float DistanceToTarget = Vector3.Distance(destination, AI.Body.transform.position);
-        AI.Movement(destination);
-        if (mState == ActionState.IDLE)
-        {
-            mState = ActionState.WORKING;
-        }
-        else if(AI.PlayerInSight)
+
+        //if (mState == ActionState.IDLE)
+        //{
+        //    mState = ActionState.WORKING;
+        //}
+        if(AI.PlayerInSight)
         {
             mState = ActionState.IDLE;
             AI.LookArround = false;
@@ -183,10 +187,13 @@ public class TreeActions : MonoBehaviour
         }
         else if (DistanceToTarget < 4)
         {
-            AI.LookArround = true;
+            //AI.LookArround = true;
+            AI.StopMovement();
             mState = ActionState.IDLE;
             return TreeNodes.Status.SUCCESS;
         }
+
+        AI.Movement(destination);
         return TreeNodes.Status.RUNNING;
     }
 

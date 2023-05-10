@@ -8,6 +8,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] public float runSpeed;
  
     [SerializeField] public float health;
+    int hearts = 3;
+    [SerializeField] GameObject[] hearts_ui;
 
     Vector3 moveDirection = Vector3.zero;
     Vector3 aimDirection = Vector3.zero;
@@ -144,16 +146,42 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
+    public void ResetHealth() 
+    {
+        hearts = 3;
+        foreach (GameObject heart in hearts_ui)
+        {
+            heart.SetActive(true);
+        }
+    }
+
     public void Damage(int damage) 
     {
-        health -= damage;
+        print("ouchy");
+
+        hearts--;
+        hearts_ui[hearts].SetActive(false);
         audioSource.PlayOneShot(ouch_AudioClip);
         cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
-        if (health <= 0) 
+
+
+        print("hearts: " + hearts);
+        if(hearts == 0) 
         {
             Instantiate(blood, transform.position, Quaternion.identity);
             deathCanvas.gameObject.SetActive(true);
             gameObject.SetActive(false);
+            FindObjectOfType<RoundSystem>().gameOver = true;
         }
+
+        //health -= damage;
+        //audioSource.PlayOneShot(ouch_AudioClip);
+        //cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
+        //if (health <= 0) 
+        //{
+        //    Instantiate(blood, transform.position, Quaternion.identity);
+        //    deathCanvas.gameObject.SetActive(true);
+        //    gameObject.SetActive(false);
+        //}
     }
 }

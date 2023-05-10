@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public string Type = "";
     public GameObject Target;
     public GameObject Body;
+    public Vector3 bodyPos;
     public LayerMask TargetLayer;
     public LayerMask Obstructions;
     public bool PlayerInSight;
@@ -36,6 +37,8 @@ public class Enemy : MonoBehaviour
     public CameraShake cameraShake;
     public GameObject Arrow;
     public Transform Fire_Point;
+
+    bool isStopped = true;
     void Start()
     {
         Target = GameObject.FindObjectOfType<PlayerCharacter>().gameObject;
@@ -57,6 +60,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        bodyPos = Body.transform.position;
+    }
 
     private void FOV_Check()
     {
@@ -79,13 +86,24 @@ public class Enemy : MonoBehaviour
             
             if (Vector3.Angle(Body.transform.forward, Target_Direction) < VisAngle / 2)
             {
+                //can see
                 RaycastHit hit;
                 print("Passed if 1");
                 float Distance_to_Target = Vector3.Distance(transform.position, Target_Pos);
+
                 if (true)
                 {
+                    if (isStopped) 
+                    {
+                        LookArround = true;
+                    }
+                    else 
+                    {
+                        LookArround = false;
+                    }
+
                     print("Passed if 2 " + this.name);
-                    LookArround = false;
+  
                     PlayerInSight = true;
                          
                 }
@@ -93,20 +111,19 @@ public class Enemy : MonoBehaviour
                 {
                     print("Failed if 2");
                     PlayerInSight = false;
-
                 }
             }
             else
             {
                 print("Failed if 1");
-                LookArround = true;
+                LookArround = false;
                 PlayerInSight = false;
             }
 
         }
         else if (PlayerInSight)
         {
-            LookArround = true;
+            //LookArround = true;
             PlayerInSight = false;
         }
         else
@@ -119,6 +136,7 @@ public class Enemy : MonoBehaviour
     public void StopMovement()
     {
         print("Stopped");
+        isStopped = true;
         NavAgent.CompletePath();
     }
 
@@ -126,6 +144,7 @@ public class Enemy : MonoBehaviour
 
     public void Movement(Vector3 endPoint) 
     {
+        isStopped = false;
         Vector3 BodyNoY = new Vector3(Body.transform.position.x, 0, Body.transform.position.z);
         List<Vector3> path = PathfindRequestManager.instance.RequestPath(BodyNoY, endPoint);
         if (path == null)
@@ -162,12 +181,11 @@ public class Enemy : MonoBehaviour
             if(Type != "Flocking")
             {
                 print("Playing Animation");
-                Attack_Anim.SetBool("IsAttacking", true);
+                Attack_Anim.SetBool("isAttacking", true);
             }
             if (Type == "Range")
             {
-                var temp = Instantiate(Arrow, Fire_Point.position, Fire_Point.rotation);
-                temp.GetComponent<Projectile>().Damage = AttackDamge;
+                StartCoroutine(RangeAttack());
                 EndOfCooldown = Time.time + AttackCooldown;
                 return TreeNodes.Status.SUCCESS;
             }
@@ -176,10 +194,22 @@ public class Enemy : MonoBehaviour
             player.Damage(AttackDamge);
             return TreeNodes.Status.SUCCESS;
         }
+        else 
+        {
+            if (Type != "Flocking")
+                Attack_Anim.SetBool("isAttacking", false);
+        }
         
         print("Attack on cooldown " + EndOfCooldown);
         print("Time " + Time.time);
         return TreeNodes.Status.FAILURE;   
+    }
+
+    IEnumerator RangeAttack() 
+    {
+        yield return new WaitForSeconds(0.48f);
+        var temp = Instantiate(Arrow, Fire_Point.position, Fire_Point.rotation);
+        temp.GetComponent<Projectile>().Damage = AttackDamge;
     }
 
     protected void Heal(int amount)
