@@ -14,6 +14,11 @@ public class AStar_Pathfinding : MonoBehaviour
         Node startNode = grid.GetNodeFromPosition(startPos);
         Node endNode = grid.GetNodeFromPosition(destinationPos);
 
+        if(endNode == null) 
+        {
+            return null;
+        }
+
         BinaryHeap<Node> openHeap = new BinaryHeap<Node>(grid.gridSizeX * grid.gridSizeY);
         HashSet<Node> closedList = new HashSet<Node>();
 

@@ -8,15 +8,13 @@ public class Nav_Agent : MonoBehaviour
     int waypoint_index = 0;
     bool followingPath = false;
     [SerializeField] float speed = 100.0f;
+    [SerializeField] float turnSpeed = 150.0f;
     Vector3 direction;
     Vector2 targetDirection;
     Vector3 rightPerpendicular_direction;
 
     [SerializeField] GameObject body;
-    [SerializeField] float pathSmoothingBoundary;
     float distanceToWaypoint;
-
-    Nav_Grid ng;
 
     [SerializeField] float destinationRadius;
 
@@ -24,7 +22,6 @@ public class Nav_Agent : MonoBehaviour
     bool stopMove = false;
 
     CameraShake cameraShake;
-    [SerializeField] float smoothTurnSpeed = 2.0f;
 
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip hit_audioClip;
@@ -33,7 +30,6 @@ public class Nav_Agent : MonoBehaviour
     [SerializeField] bool canDie;
     private void Start()
     {
-        ng = FindObjectOfType<Nav_Grid>();
         cameraShake = FindObjectOfType<CameraShake>();
         wave = GetComponentInParent<Wave>();
 
@@ -64,12 +60,6 @@ public class Nav_Agent : MonoBehaviour
 
         if (followingPath)
         {
-            //debug
-            List<Node> n = new List<Node>();
-            n.Add(ng.GetNodeFromPosition(new Vector3(waypoints[waypoint_index].x, 0, waypoints[waypoint_index].z)));
-            ng.path = n;
-            //debug
-
             FollowPath();
         }        
     }
@@ -122,8 +112,7 @@ public class Nav_Agent : MonoBehaviour
         {
             if(90 - angle > 5) 
             {
-
-                ChangeDirection(RotateVector(direction, 150 * Time.deltaTime));
+                ChangeDirection(RotateVector(direction, turnSpeed * Time.deltaTime));
             }
             
         }
@@ -131,7 +120,7 @@ public class Nav_Agent : MonoBehaviour
         {
             if (angle - 90 > 5)
             {
-                ChangeDirection(RotateVector(direction, -150 * Time.deltaTime));
+                ChangeDirection(RotateVector(direction, -turnSpeed * Time.deltaTime));
             }
             
         }
@@ -174,7 +163,7 @@ public class Nav_Agent : MonoBehaviour
             return;
         }
 
-        if (other.tag == "AttackBox")
+        if (other.CompareTag("AttackBox"))
         {
             print("ouch");
             Transform t = new GameObject().transform;
@@ -182,7 +171,10 @@ public class Nav_Agent : MonoBehaviour
             Instantiate(blood, t.position, Quaternion.identity);
             cameraShake.StartCoroutine(cameraShake.Shake(0.1f, 0.4f));
             audioSource.PlayOneShot(hit_audioClip, 0.3f);
-            wave.UnitDeath();
+            if(wave != null) 
+            {
+                wave.UnitDeath();
+            }
             Destroy(gameObject);
         }
     }

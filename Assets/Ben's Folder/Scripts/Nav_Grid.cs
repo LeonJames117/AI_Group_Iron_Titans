@@ -154,6 +154,12 @@ public class Nav_Grid : MonoBehaviour
         x = (int)(x / nodeDiameter);
         y = (int)(y / nodeDiameter);
 
+        if(x >= gridSizeX || y >= gridSizeY ||
+           x < 0 || y < 0) 
+        {
+            return null;
+        }
+
         return grid[(int)x, (int)y];
     }
 
@@ -173,8 +179,8 @@ public class Nav_Grid : MonoBehaviour
                     continue;
                 }
                 
-                if((xCoord >= 0 && xCoord <= gridSizeX) &&
-                   (yCoord >= 0 && xCoord <= gridSizeY)) 
+                if((xCoord >= 0 && xCoord < gridSizeX) &&
+                   (yCoord >= 0 && xCoord < gridSizeY)) 
                 {
 
                     if(((!grid[xCoord, yCoord].isObstructed) || (grid[xCoord, yCoord] == endNode))) 
@@ -190,6 +196,7 @@ public class Nav_Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print("update grid");
         updateTimer += Time.deltaTime;
         if(updateTimer >= updateFrequency) 
         {

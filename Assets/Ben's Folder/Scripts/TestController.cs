@@ -46,7 +46,10 @@ public class TestController : MonoBehaviour
         if((startPos - endPos).magnitude > 2.0) 
         {
             List<Vector3> path = PathfindRequestManager.instance.RequestPath(startPos, endPos);
-
+            if(path == null) 
+            {
+                return;
+            }
             int lastIndex = path.Count - 1;
             Vector3 lastPos = path[lastIndex]; 
             nav_agent.StartFollowPath(path);
