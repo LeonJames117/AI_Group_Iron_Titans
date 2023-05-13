@@ -24,7 +24,7 @@ public class Flocking_Avoidance: Flocking_Behavior
                 Avoidance_Adjust += Current_AgentNoY - NeighbourNoY;
                 Avoid_Num++;
             }
-            if(Avoid_Num<0)
+            if(Avoid_Num>0)
             {
                 Avoidance_Adjust /= Avoid_Num;
             }
