@@ -22466,7 +22466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f8ec9c081d00f344b4970a49dbd3f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Flocking_Prefab: {fileID: 0}
   All_Agents:
   - {fileID: 282830647}
   - {fileID: 1641343252}
@@ -22474,9 +22473,7 @@ MonoBehaviour:
   - {fileID: 1984209384}
   - {fileID: 1661502522}
   - {fileID: 1843487765}
-  Add_Agents_Manually: 1
   Behavior: {fileID: 11400000, guid: 29687234bdc60cb43a21fef0e9e1459f, type: 2}
-  Agent_Count: 30
   Speed_Mulitplier: 10
   Max_Speed: 5
   Detection_Radius: 2

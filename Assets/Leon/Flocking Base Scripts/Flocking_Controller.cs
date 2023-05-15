@@ -5,14 +5,10 @@ using UnityEngine;
 public class Flocking_Controller : MonoBehaviour
 {
     //List Setup
-    public Flocking_Agent Flocking_Prefab;
     public List<Flocking_Agent> All_Agents = new List<Flocking_Agent>();
-    public bool Add_Agents_Manually = true;
     //Behavior
     public Flocking_Behavior Behavior;
     //Spawning
-    [Range(1, 500)]
-    public int Agent_Count = 30;
     const float Density = 0.5f;
     //Movement
     [Range(1f, 100f)]
@@ -46,32 +42,7 @@ public class Flocking_Controller : MonoBehaviour
         //
 
         //Setup Flock
-        if(!Add_Agents_Manually)
-        {
-            for (int i = 0; i < Agent_Count; i++)
-            {
-                Vector3 Random_Pos_in_Cir = Random.insideUnitCircle * (Agent_Count * Density) / 2;
-
-                Vector3 Random_Pos_in_Cir_NoY = new Vector3(Random_Pos_in_Cir.x,this.transform.position.y,Random_Pos_in_Cir.z);
-
-                if (!Physics.CheckSphere(Random_Pos_in_Cir_NoY, 0.5f))
-                {
-                    Flocking_Agent New_Agent = Instantiate(Flocking_Prefab, Random_Pos_in_Cir_NoY, Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)), transform);
-                    print("Agent " + i + " Instaticated");
-                    New_Agent.name = "Flocking_Agent " + i;
-                    print("Agent " + i + " Added to array");
-                    All_Agents.Add(New_Agent);
-                }
-                else
-                {
-                    print("Overlap detected on " + "Agent " + i);
-                    i--;
-                }
-
-
-
-            }
-        }
+       
        
     }
 
