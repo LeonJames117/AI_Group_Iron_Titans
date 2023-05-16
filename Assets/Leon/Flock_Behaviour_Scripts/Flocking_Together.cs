@@ -18,15 +18,13 @@ public class Flocking_Together : Flocking_Behavior
 
         Vector3 Final_Move = Vector3.zero;
 
-        //Itterate Behaviors
-
         for(int i = 0; i < Behaviors.Length; i++)
-        {
+        {// Itterate Behaviors
+            // Multiply each behavior by it's corrisponding weight 
             Vector3 Move_IP = Behaviors[i].Caculate_Movement(Current_Agent, World_Context, Controller,Leader) * Weights[i];
-
             if(Move_IP!= Vector3.zero)
             {
-                if(Move_IP.sqrMagnitude > Weights[i]*Weights[i])
+                if(Move_IP.sqrMagnitude > Weights[i]*Weights[i])// Does the move exceed the total of the weight? if yes normalize it by the weight
                 {
                     Move_IP.Normalize();
                     Move_IP*=Weights[i];
@@ -35,9 +33,6 @@ public class Flocking_Together : Flocking_Behavior
             }
         }
 
-        
-        
-        
         return Final_Move;
 
     }
